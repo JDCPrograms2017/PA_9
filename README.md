@@ -1,5 +1,4 @@
 ### PA_9
-### ----
 
 This is the final assignment for WSU Computer Science 122. 
 
