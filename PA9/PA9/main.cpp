@@ -16,10 +16,20 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "Fuck bitches, get money!");
-    sf::CircleShape shape(100.f);
-    
-    shape.setFillColor(sf::Color::Red);
+    sf::RenderWindow window(sf::VideoMode(1050, 789), "Code to my Heart");
+    sf::CircleShape shape(20.0f);
+
+    // This Spite stuff could be condensed to a class that inherets from both the Texture and Sprite class possibly
+    sf::Texture backgroundTexture;
+    sf::Sprite background;
+    backgroundTexture.loadFromFile("8-bit-japanese-background.png");
+    background.setTexture(backgroundTexture);
+
+    shape.setFillColor(sf::Color::Green);
+
+    window.setFramerateLimit(60); // cap it at 60FPS rn
+
+    bool isFullscreen = true;
 
     while (window.isOpen())
     {
@@ -28,11 +38,17 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                if (!isFullscreen) window.create(sf::VideoMode(800, 800), "Code to my Heart");
+
+                isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+            }
         }
 
         window.clear();
-        window.draw(shape);
-        window.draw(shape);
+        window.draw(background);
         window.display();
     }
 
