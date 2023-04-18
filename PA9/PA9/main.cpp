@@ -16,9 +16,12 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    sf::RenderWindow window(sf::VideoMode(735, 413), "wooha");
+    sf::RectangleShape background;
+    background.setSize(sf::Vector2f(735, 413));
+    sf::Texture Maintexture;
+    Maintexture.loadFromFile("Textures/funny.jpg");
+    background.setTexture(&Maintexture);
 
     while (window.isOpen())
     {
@@ -30,7 +33,7 @@ int main()
         }
 
         window.clear();
-        window.draw(shape);
+        window.draw(background);
         window.display();
     }
 
