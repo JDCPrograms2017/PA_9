@@ -10,12 +10,11 @@ public:
 		toggle = false;
 		this->setTexture(&buttonTexture);
 		dynamic_cast<sf::RectangleShape&>(*this).setTexture(&buttonTexture);
+		this->setPosition(position);
 		std::cout << "New button created!\n";
 	};
 
 	void toggleButton();
-
-	bool getButtonState();
 	void setPosition(sf::Vector2f &newPosition);
 	void changeButtonTexture(sf::Texture& newTexture);
 

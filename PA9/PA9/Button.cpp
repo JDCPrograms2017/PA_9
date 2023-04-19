@@ -18,7 +18,7 @@ bool Button::getButtonState() {
 }
 
 bool isBeingPushed() {
-	//nothing rn
+	return false;
 }
 
 sf::RectangleShape& Button::getDrawableShape() {

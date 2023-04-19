@@ -41,7 +41,7 @@ int main()
 
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/testButton.png");
-    Button playGameBtn(sf::Vector2f(50, 250), sf::Vector2f(20, 800), btnTexture);
+    Button playGameBtn(sf::Vector2f(250, 100), sf::Vector2f(50, 50), btnTexture);
 
     bool isFullscreen = true;
     bool menuMode = true;
