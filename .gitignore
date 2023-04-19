@@ -7,3 +7,5 @@
 *.vsidx
 *.log
 *.wsuo
+*.suo
+*.VC

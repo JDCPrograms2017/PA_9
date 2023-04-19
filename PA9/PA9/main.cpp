@@ -13,29 +13,45 @@
 // Additional Note: SFML only allows compiling and executing in machine type x64, so x86 & arm64 won't compile to my knowledge...
 
 #include <SFML/Graphics.hpp>
+#include "Button.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1050, 789), "Code to my Heart");
-    sf::CircleShape shape(20.0f);
+    sf::RenderWindow window(sf::VideoMode(735, 413), "wooha");
 
-    // This Spite stuff could be condensed to a class that inherets from both the Texture and Sprite class possibly
-    sf::Texture backgroundTexture;
-    sf::Sprite background;
-    backgroundTexture.loadFromFile("8-bit-japanese-background.png");
-    background.setTexture(backgroundTexture);
+    // This is the texture and mapping for the background
+    sf::RectangleShape background;
+    background.setSize(sf::Vector2f(735, 413));
+    sf::Texture gameBackgroundTexture;
+    sf::Texture menuBackgroundTexture;
+    menuBackgroundTexture.loadFromFile("8-bit-japanese-background.png");
+    gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
+    background.setTexture(&menuBackgroundTexture);
 
-    shape.setFillColor(sf::Color::Green);
+    // This is the texture and mapping for where the text will go when she speaks
+    sf::RectangleShape rec_shape;
+    rec_shape.setSize(sf::Vector2f(735, 413));
+    sf::Texture text_Texture;
+    text_Texture.loadFromFile("Textures/text_box.png");
+    rec_shape.setTexture(&text_Texture);
+    rec_shape.setPosition(0, 100);
 
     window.setFramerateLimit(60); // cap it at 60FPS rn
 
+    sf::Texture btnTexture;
+    btnTexture.loadFromFile("Textures/text_box.png");
+    Button playGameBtn(sf::Vector2f(100, 500), sf::Vector2f(100, 100), btnTexture);
+
     bool isFullscreen = true;
+    bool menuMode = true;
 
     while (window.isOpen())
     {
+
         sf::Event event;
         while (window.pollEvent(event))
         {
+
             if (event.type == sf::Event::Closed)
                 window.close();
 
@@ -44,6 +60,15 @@ int main()
                 if (!isFullscreen) window.create(sf::VideoMode(800, 800), "Code to my Heart");
 
                 isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+            }
+
+            // Display all of the menu features
+            if (menuMode) {
+                window.draw(playGameBtn.getDrawableShape());
+            }
+            // Run the game
+            else {
+                window.draw(rec_shape);
             }
         }
 
