@@ -8,3 +8,7 @@ void Button::toggleButton() {
 bool Button::getButtonState() {
 	return this->toggle;
 }
+
+sf::RectangleShape& Button::getDrawableShape() {
+	return dynamic_cast<sf::RectangleShape&>(*this);
+}
