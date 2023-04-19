@@ -37,7 +37,6 @@ int main()
     rec_shape.setPosition(0, 100);
 
     window.setFramerateLimit(60); // cap it at 60FPS rn
-
     
 
     sf::Texture btnTexture;
@@ -55,6 +54,7 @@ int main()
         {
             window.clear();
             window.draw(background);
+
             if (event.type == sf::Event::Closed)
                 window.close();
 
@@ -68,9 +68,6 @@ int main()
             // Display all of the menu features
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
-
-                
-
             }
             // Run the game
             else {
@@ -78,7 +75,6 @@ int main()
             }
         }
 
-      
         window.display();
     }
 
