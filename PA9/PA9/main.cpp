@@ -38,20 +38,23 @@ int main()
 
     window.setFramerateLimit(60); // cap it at 60FPS rn
 
+    
+
     sf::Texture btnTexture;
-    btnTexture.loadFromFile("Textures/text_box.png");
-    Button playGameBtn(sf::Vector2f(100, 500), sf::Vector2f(100, 100), btnTexture);
+    btnTexture.loadFromFile("Textures/testButton.png");
+    Button playGameBtn(sf::Vector2f(50, 250), sf::Vector2f(20, 800), btnTexture);
 
     bool isFullscreen = true;
     bool menuMode = true;
 
     while (window.isOpen())
     {
-
+        
         sf::Event event;
         while (window.pollEvent(event))
         {
-
+            window.clear();
+            window.draw(background);
             if (event.type == sf::Event::Closed)
                 window.close();
 
@@ -65,6 +68,9 @@ int main()
             // Display all of the menu features
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
+
+                
+
             }
             // Run the game
             else {
@@ -72,8 +78,7 @@ int main()
             }
         }
 
-        window.clear();
-        window.draw(background);
+      
         window.display();
     }
 
