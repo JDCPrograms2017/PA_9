@@ -24,7 +24,7 @@ int main()
     background.setSize(sf::Vector2f(735, 413));
     sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
-    menuBackgroundTexture.loadFromFile("8-bit-japanese-background.png");
+    menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
     background.setTexture(&menuBackgroundTexture);
 
@@ -41,7 +41,7 @@ int main()
     
 
     sf::Texture btnTexture;
-    btnTexture.loadFromFile("Textures/testButton.png");
+    btnTexture.loadFromFile("Textures/pink-button.png");
     Button playGameBtn(sf::Vector2f(50, 250), sf::Vector2f(20, 800), btnTexture);
 
     bool isFullscreen = true;
