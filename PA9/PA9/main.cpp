@@ -33,7 +33,9 @@ int main()
     rec_shape.setTexture(&text_Texture);
     rec_shape.setPosition(0, 100);
 
+    window.setFramerateLimit(60); // cap it at 60FPS rn
 
+    bool isFullscreen = true;
 
     while (window.isOpen())
     {
@@ -42,6 +44,13 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                if (!isFullscreen) window.create(sf::VideoMode(800, 800), "Code to my Heart");
+
+                isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+            }
         }
 
         window.clear();
