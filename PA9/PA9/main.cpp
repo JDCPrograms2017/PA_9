@@ -13,6 +13,7 @@
 // Additional Note: SFML only allows compiling and executing in machine type x64, so x86 & arm64 won't compile to my knowledge...
 
 #include <SFML/Graphics.hpp>
+#include "Button.hpp"
 
 int main()
 {
@@ -21,9 +22,11 @@ int main()
     // This is the texture and mapping for the background
     sf::RectangleShape background;
     background.setSize(sf::Vector2f(735, 413));
-    sf::Texture Maintexture;
-    Maintexture.loadFromFile("Textures/funny.jpg");
-    background.setTexture(&Maintexture);
+    sf::Texture gameBackgroundTexture;
+    sf::Texture menuBackgroundTexture;
+    menuBackgroundTexture.loadFromFile("8-bit-japanese-background.png");
+    gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
+    background.setTexture(&menuBackgroundTexture);
 
     // This is the texture and mapping for where the text will go when she speaks
     sf::RectangleShape rec_shape;
@@ -36,9 +39,11 @@ int main()
     window.setFramerateLimit(60); // cap it at 60FPS rn
 
     bool isFullscreen = true;
+    bool menuMode = true;
 
     while (window.isOpen())
     {
+        
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -50,6 +55,15 @@ int main()
                 if (!isFullscreen) window.create(sf::VideoMode(800, 800), "Code to my Heart");
 
                 isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+            }
+
+            // Display all of the menu features
+            if (menuMode) {
+
+            }
+            // Run the game
+            else {
+
             }
         }
 
