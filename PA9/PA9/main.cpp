@@ -47,6 +47,8 @@ int main()
 
     while (window.isOpen())
     {
+        window.clear();
+        window.draw(background);
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -72,8 +74,6 @@ int main()
             }
         }
 
-        window.clear();
-        window.draw(background);
         window.display();
     }
 
