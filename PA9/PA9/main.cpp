@@ -3,7 +3,7 @@
 * Project Name: PA 9 - Anime Date Simulaton
 * Due Date: April 26, 2023
 * Professor: Andy O'Fallon
-* 
+*
 * Description: N/A
 */
 
@@ -29,7 +29,7 @@ int main()
         throw("Music no load!");
     }
     music.play();
-   
+
 
     // Text generation
     sf::Font font;
@@ -72,8 +72,8 @@ int main()
     girl_asset.setSmooth(true);
     andy_girl.setTexture(&girl_asset);
     andy_girl.setPosition(575, -50);
-  
-    
+
+
 
     bool isFullscreen = true;
 
