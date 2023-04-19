@@ -18,12 +18,14 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(735, 413), "wooha");
 
+    // This is the texture and mapping for the background
     sf::RectangleShape background;
     background.setSize(sf::Vector2f(735, 413));
     sf::Texture Maintexture;
     Maintexture.loadFromFile("Textures/funny.jpg");
     background.setTexture(&Maintexture);
 
+    // This is the texture and mapping for where the text will go when she speaks
     sf::RectangleShape rec_shape;
     rec_shape.setSize(sf::Vector2f(735, 413));
     sf::Texture text_Texture;
