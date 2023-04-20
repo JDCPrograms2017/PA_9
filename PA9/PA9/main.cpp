@@ -40,19 +40,19 @@ int main()
 
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/text_box.png");
-    Button playGameBtn(sf::Vector2f(100, 500), sf::Vector2f(100, 100), btnTexture);
+    Button playGameBtn(sf::Vector2f(500, 100), sf::Vector2f(200, 100), btnTexture);
 
     bool isFullscreen = true;
     bool menuMode = true;
 
     while (window.isOpen())
     {
-        window.clear();
-        window.draw(background);
 
         sf::Event event;
         while (window.pollEvent(event))
         {
+            window.clear();
+            window.draw(background);
 
             if (event.type == sf::Event::Closed)
                 window.close();
@@ -67,6 +67,7 @@ int main()
             // Display all of the menu features
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
+                if (playGameBtn.isBeingPushed(window)) std::cout << "I'm being touched!\n";
             }
             // Run the game
             else {
