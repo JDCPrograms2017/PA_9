@@ -199,6 +199,10 @@
   <ItemGroup>
     <Image Include="8-bit-japanese-background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="char_gen.h" />
+    <ClInclude Include="waifu.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -27,4 +27,12 @@
       <Filter>Resource Files\media</Filter>
     </Image>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="waifu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="char_gen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

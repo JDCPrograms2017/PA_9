@@ -15,8 +15,9 @@
 #define _CRT_SECURE_NO_DEPRECATE
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-
-
+#include <iostream>
+#include "Waifu.h"
+#include "char_gen.h"
 
 int main()
 {
@@ -64,14 +65,17 @@ int main()
     rec_shape.setTexture(&text_Texture);
     rec_shape.setPosition(-20, 200);
 
-    // andy's dream girl
+    // andy's dream girl, added polymorphism
     sf::RectangleShape andy_girl;
-    andy_girl.setSize(sf::Vector2f(506, 758));
     sf::Texture girl_asset;
-    girl_asset.loadFromFile("Textures/andy_girl3.png");
-    girl_asset.setSmooth(true);
-    andy_girl.setTexture(&girl_asset);
-    andy_girl.setPosition(575, -50);
+    char_gen girl_obj(andy_girl,girl_asset,"Textures/anfy_girl3");
+   
+
+    //andy_girl.setSize(sf::Vector2f(506, 758));
+    //girl_asset.loadFromFile("Textures/andy_girl3.png");
+    //girl_asset.setSmooth(true);
+    //andy_girl.setTexture(&girl_asset);
+    //andy_girl.setPosition(575, -50);
 
 
 
