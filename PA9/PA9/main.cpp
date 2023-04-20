@@ -39,10 +39,18 @@ int main()
     window.setFramerateLimit(60); // cap it at 60FPS rn
 
     
+    // this is the texture for the button
+    sf::Texture menuButtons;
+    menuButtons.loadFromFile("Textures/pink-button.png");
+    Button newSessionBtn(sf::Vector2f(200, 80), sf::Vector2f(1, 1), menuButtons);
+    Button resumeSessionBtn(sf::Vector2f(200, 80), sf::Vector2f(1, 1), menuButtons);
+    Button aboutGameBtn(sf::Vector2f(200, 80), sf::Vector2f(1, 1), menuButtons);
 
-    sf::Texture btnTexture;
-    btnTexture.loadFromFile("Textures/pink-button.png");
-    Button playGameBtn(sf::Vector2f(50, 250), sf::Vector2f(20, 800), btnTexture);
+    sf::Texture exitButton;
+    exitButton.loadFromFile("Textures/exit.png");
+    Button exitBtn(sf::Vector2f(100, 30), sf::Vector2f(1, 1), exitButton);
+
+
 
     bool isFullscreen = true;
     bool menuMode = true;
@@ -67,7 +75,10 @@ int main()
 
             // Display all of the menu features
             if (menuMode) {
-                window.draw(playGameBtn.getDrawableShape());
+                window.draw(newSessionBtn.getDrawableShape());
+                window.draw(resumeSessionBtn.getDrawableShape());
+                window.draw(aboutGameBtn.getDrawableShape());
+                window.draw(exitBtn.getDrawableShape());
 
                 
 
