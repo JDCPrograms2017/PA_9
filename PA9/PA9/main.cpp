@@ -18,12 +18,12 @@
 #include "Character.h"
 #include "Button.hpp"
 
-sf::Vector2f& resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef);
+void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite& backgroundRef);
 sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef);
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1050, 789), "Code to My Heart");
+    sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
     // music
     sf::Music music;
@@ -55,11 +55,10 @@ int main()
     sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
-    menuBackgroundTexture.loadFromFile("8-bit-japanese-background.png");
+    menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
-    background.setTexture(menuBackgroundTexture);
-    backgroundResizeValue = resetBackgroundScale(window, menuBackgroundTexture);
-    background.setScale(backgroundResizeValue);
+    background.setPosition(0, 0);
+    resetBackgroundScale(window, menuBackgroundTexture, background);
 
     // This is the texture and mapping for where the text will go when she speaks
     // text box
@@ -75,25 +74,18 @@ int main()
     sf::Texture girl_asset;
     girl_asset.loadFromFile("Textures/andy_girl3.png");
     Character girl(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(500, -100));
-   
-
-    //andy_girl.setSize(sf::Vector2f(506, 758));
-    //girl_asset.loadFromFile("Textures/andy_girl3.png");
-    //girl_asset.setSmooth(true);
-    //andy_girl.setTexture(&girl_asset);
-    //andy_girl.setPosition(575, -50);
 
 
 
     sf::Texture btnTexture;
-    btnTexture.loadFromFile("Textures/text_box.png");
-    Button playGameBtn(sf::Vector2f(500, 100), sf::Vector2f(100, 100), btnTexture);
+    btnTexture.loadFromFile("Textures/pink-button.png");
+    Button playGameBtn(sf::Vector2f(200, 100), sf::Vector2f(100, 100), btnTexture);
 
     bool isFullscreen = true;
     bool menuMode = true;
 
     music.play();
-    while (window.isOpen())
+    while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
         sf::Event event;
@@ -107,14 +99,14 @@ int main()
 
             if (event.type == sf::Event::Resized) {
                 // if the window was resized, do something... like reposition our characters
+                resetBackgroundScale(window, gameBackgroundTexture, background);
             }
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
                 if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
                 if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
 
-                backgroundResizeValue = resetBackgroundScale(window, gameBackgroundTexture);
-                background.setScale(backgroundResizeValue);
+                resetBackgroundScale(window, gameBackgroundTexture, background);
 
                 isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
             }
@@ -123,9 +115,7 @@ int main()
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
                 if (playGameBtn.isBeingPushed(window)) {
-                    background.setTexture(gameBackgroundTexture);
-                    backgroundResizeValue = resetBackgroundScale(window, gameBackgroundTexture);
-                    background.setScale(backgroundResizeValue);
+                    resetBackgroundScale(window, gameBackgroundTexture, background);
 
                     menuMode = false;
                 }
@@ -144,15 +134,14 @@ int main()
     return 0;
 }
 
-sf::Vector2f& resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef) {
+void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite &backgroundRef) {
     sf::Vector2u windowSize = windowRef.getSize(), textureSize = backgroundTextureRef.getSize();
 
-    float scaleX = (float)(windowSize.x / textureSize.x);
-    float scaleY = (float)(windowSize.y / textureSize.y);
+    float scaleX = (float)windowSize.x / textureSize.x;
+    float scaleY = (float)windowSize.y / textureSize.y;
 
-    sf::Vector2f result(scaleX, scaleY);
-
-    return result;
+    backgroundRef.setTexture(backgroundTextureRef);
+    backgroundRef.setScale(scaleX, scaleY);
 }
 
 sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef) {
