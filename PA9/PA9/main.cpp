@@ -1,9 +1,9 @@
 /*
 * Collaborators: Simon Meili, Zack Felcyn, Joshua Chadwick, Haley Boileau
-* Project Name: PA 9 - Anime Date Simulator
+* Project Name: PA 9 - Anime Date Simulaton
 * Due Date: April 26, 2023
 * Professor: Andy O'Fallon
-* 
+*
 * Description: N/A
 */
 
@@ -12,14 +12,45 @@
 // 
 // Additional Note: SFML only allows compiling and executing in machine type x64, so x86 & arm64 won't compile to my knowledge...
 
+#define _CRT_SECURE_NO_DEPRECATE
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <iostream>
+#include "Waifu.h"
+#include "char_gen.h"
 #include "Button.hpp"
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(735, 413), "wooha");
+    sf::RenderWindow window(sf::VideoMode(1102, 646), "wooha");
+
+    // music
+    sf::Music music;
+    if (!music.openFromFile("music/dating_theme.ogg"))
+    {
+        throw("Music no load!");
+    }
+    music.play();
+
+
+    // Text generation
+    sf::Font font;
+    if (!font.loadFromFile("Font/Aller_It.ttf"))
+    {
+        throw("Sadness :(");
+    }
+    // text generated on screen
+    sf::Text text;
+    text.setFont(font);
+    text.setCharacterSize(30);
+    text.setFillColor(sf::Color::White);
+    text.setStyle(sf::Text::Regular);
+    text.setString("\"You look lonely, I could fix that...\"");
+    text.setPosition(250, 475);
+
 
     // This is the texture and mapping for the background
+    // Background
     sf::RectangleShape background;
     background.setSize(sf::Vector2f(735, 413));
     sf::Texture gameBackgroundTexture;
@@ -29,14 +60,27 @@ int main()
     background.setTexture(&menuBackgroundTexture);
 
     // This is the texture and mapping for where the text will go when she speaks
+    // text box
     sf::RectangleShape rec_shape;
-    rec_shape.setSize(sf::Vector2f(735, 413));
+    rec_shape.setSize(sf::Vector2f(1261, 569));
     sf::Texture text_Texture;
     text_Texture.loadFromFile("Textures/text_box.png");
     rec_shape.setTexture(&text_Texture);
-    rec_shape.setPosition(0, 100);
+    rec_shape.setPosition(-20, 200);
 
-    window.setFramerateLimit(60); // cap it at 60FPS rn
+    // andy's dream girl, added polymorphism
+    sf::RectangleShape andy_girl;
+    sf::Texture girl_asset;
+    char_gen girl_obj(andy_girl,girl_asset,"Textures/anfy_girl3");
+   
+
+    //andy_girl.setSize(sf::Vector2f(506, 758));
+    //girl_asset.loadFromFile("Textures/andy_girl3.png");
+    //girl_asset.setSmooth(true);
+    //andy_girl.setTexture(&girl_asset);
+    //andy_girl.setPosition(575, -50);
+
+
 
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/text_box.png");
@@ -53,6 +97,9 @@ int main()
         {
             window.clear();
             window.draw(background);
+            window.draw(andy_girl);
+            window.draw(rec_shape);
+            window.draw(text);
 
             if (event.type == sf::Event::Closed)
                 window.close();
