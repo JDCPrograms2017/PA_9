@@ -6,6 +6,7 @@ void Button::toggleButton() {
 }
 
 void Button::setPosition(sf::Vector2f &newPosition) {
+	this->position = newPosition;
 	RectangleShape::setPosition(newPosition);
 }
 
