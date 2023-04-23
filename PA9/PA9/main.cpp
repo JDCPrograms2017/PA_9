@@ -144,7 +144,7 @@ void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTe
     backgroundRef.setScale(scaleX, scaleY);
 }
 
-sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef) {
+sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::RenderWindow& windowRef) {
     float posX = characterRef.getPosition().x;
     sf::Vector2f result(0, 0);
     return result;

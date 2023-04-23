@@ -5,7 +5,7 @@
 class Character : public sf::Sprite {
 
 public:
-	Character(const sf::Texture& newTexture, const sf::Vector2f& scale, const sf::Vector2f& position) : sf::Sprite(newTexture) {
+	Character(const sf::Texture& newTexture = sf::Texture(), const sf::Vector2f& scale = sf::Vector2f(0, 0), const sf::Vector2f& position = sf::Vector2f(0, 0)) : sf::Sprite(newTexture) {
 		this->setScale(scale); // goes into sf::Sprite to adjust the scale
 		this->setPosition(position);
 		interestLevel = 0;
