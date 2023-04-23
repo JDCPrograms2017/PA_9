@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Mouse.hpp>
 #include <iostream>
 
 class Button : public sf::RectangleShape {
@@ -8,10 +9,13 @@ class Button : public sf::RectangleShape {
 public:
 	Button(const sf::Vector2f& newSize = sf::Vector2f(0, 0), const sf::Vector2f& newPos = sf::Vector2f(0, 0), const sf::Texture& newButtonTexture = sf::Texture()) : sf::RectangleShape(newSize), position(newPos), buttonTexture(newButtonTexture) {
 		toggle = false;
-		this->setTexture(&buttonTexture);
+);
+
 		dynamic_cast<sf::RectangleShape&>(*this).setTexture(&buttonTexture);
-		this->setPosition(position);
+
+
 		std::cout << "New button created!\n";
+		this->setPosition(position);
 	};
 
 	void toggleButton();
@@ -19,10 +23,12 @@ public:
 	void changeButtonTexture(sf::Texture& newTexture);
 
 	bool getButtonState();
-	bool isBeingPushed();
+
+	bool isBeingPushed(const sf::Window &windowRef);
+
+
 	sf::RectangleShape& getDrawableShape();
 private:
-	sf::Vector2f size;
 	sf::Vector2f position;
 	const sf::Texture buttonTexture;
 	bool toggle;
