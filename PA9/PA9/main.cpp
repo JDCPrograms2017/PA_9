@@ -79,7 +79,12 @@ int main()
 
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/pink-button.png");
-    Button playGameBtn(sf::Vector2f(200, 100), sf::Vector2f(100, 100), btnTexture);
+    Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture);
+    Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture);
+    btnTexture.loadFromFile("Textures/exit.png");
+    Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), btnTexture);
+
+
 
     bool isFullscreen = true;
     bool menuMode = true;
@@ -114,6 +119,9 @@ int main()
             // Display all of the menu features
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
+                window.draw(aboutGameBtn.getDrawableShape());
+                window.draw(exitBtn.getDrawableShape());
+
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
 
