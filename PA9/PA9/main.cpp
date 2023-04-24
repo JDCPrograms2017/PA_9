@@ -54,10 +54,12 @@ int main()
     sf::Sprite background;
     sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
+    sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
     background.setPosition(0, 0);
+    aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     resetBackgroundScale(window, menuBackgroundTexture, background);
 
     // This is the texture and mapping for where the text will go when she speaks
@@ -76,16 +78,34 @@ int main()
     Character girl(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(500, -100));
 
 
-
+    // menu buttons
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/pink-button.png");
-    Button playGameBtn(sf::Vector2f(200, 100), sf::Vector2f(100, 100), btnTexture, "Some Text");
+    Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
     sf::CircleShape debugDot(4);
     debugDot.setFillColor(sf::Color::Red);
     playGameBtn.setButtonTextFont(font);
+    //Text position: (823, 505)
+
+    Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture, "About Game");
+    aboutGameBtn.setButtonTextFont(font);
+    //Text Postition: (820, 580)
+
+    sf::Texture exitBtnTexture;
+    exitBtnTexture.loadFromFile("Textures/exit.png");
+    Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture, "Exit");
+    exitBtn.setButtonTextFont(font);
+    //Text Position: (1320, 730)
+
+    // about screen - exit button stays the same, changing position of play game button
+    Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture, "Play Game");
+    newPlayGameBtn.setButtonTextFont(font);
+    //Text Position: (653, 655)
+
 
     bool isFullscreen = true;
     bool menuMode = true;
+    bool aboutMode = false;
 
     music.play();
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
@@ -116,14 +136,37 @@ int main()
 
             // Display all of the menu features
             if (menuMode) {
-                //window.draw(playGameBtn.getDrawableShape());
+                window.draw(playGameBtn.getDrawableShape());
+                window.draw(aboutGameBtn.getDrawableShape());
+                window.draw(exitBtn.getDrawableShape());
                 playGameBtn.draw(window);
                 debugDot.setPosition(playGameBtn.getOrigin());
                 window.draw(debugDot);
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
-
                     menuMode = false;
+                }
+
+                if (aboutGameBtn.isBeingPushed(window)) {
+                    resetBackgroundScale(window, aboutBackgroundTexture, background);
+                    aboutMode = true;
+                    menuMode = false;
+                }
+
+                if (exitBtn.isBeingPushed(window)) {
+                    window.close();
+                }
+            }
+            else if (aboutMode) {
+                window.draw(exitBtn.getDrawableShape());
+                window.draw(newPlayGameBtn.getDrawableShape());
+                if (newPlayGameBtn.isBeingPushed(window)) {
+                    resetBackgroundScale(window, gameBackgroundTexture, background);
+                    aboutMode = false;
+                }
+
+                if (exitBtn.isBeingPushed(window)) {
+                    window.close();
                 }
             }
             // Run the game
