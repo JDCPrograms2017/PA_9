@@ -138,7 +138,7 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
-    std::ifstream fPanda("linesPanda.txt");
+   
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -299,6 +299,7 @@ int main()
                         button1.setOutlineThickness(2);
                         button1.setOutlineColor(sf::Color::Black);
                         button1.setFillColor(sf::Color::Green);
+
                         /* First Button Text  */
                         sf::Text buttonText("A", font, 20);
                         buttonText.setFillColor(sf::Color::White);
@@ -307,13 +308,14 @@ int main()
                         buttonText.setPosition(button1.getPosition() + 0.5f * button1.getSize());
 
 
-
+                        /* Second Button */
                         sf::RectangleShape button2(sf::Vector2f(100, 50));
                         button2.setPosition(50, 250);
                         button2.setOutlineThickness(2);
                         button2.setOutlineColor(sf::Color::Black);
                         button2.setFillColor(sf::Color::Red);
 
+                        /* Second Button Text */
                         sf::Text buttonText2("B", font, 20);
                         buttonText2.setFillColor(sf::Color::White);
                         sf::FloatRect textRect2 = buttonText2.getLocalBounds();
@@ -321,18 +323,33 @@ int main()
                         buttonText2.setPosition(button2.getPosition() + 0.5f * button2.getSize());
 
 
-
+                        /* Third Button */
                         sf::RectangleShape button3(sf::Vector2f(100, 50));
                         button3.setPosition(200, 150);
                         button3.setOutlineThickness(2);
                         button3.setOutlineColor(sf::Color::Black);
                         button3.setFillColor(sf::Color::Red);
 
+                        /* Third Button Text */
+                        sf::Text buttonText3("C", font, 20);
+                        buttonText3.setFillColor(sf::Color::White);
+                        sf::FloatRect textRect3 = buttonText3.getLocalBounds();
+                        buttonText3.setOrigin(textRect3.left + textRect3.width / 2.0f, textRect3.top + textRect3.height / 2.0f);
+                        buttonText3.setPosition(button3.getPosition() + 0.5f * button3.getSize());
+
+                        /* Fourth Button */
                         sf::RectangleShape button4(sf::Vector2f(100, 50));
                         button4.setPosition(200, 250);
                         button4.setOutlineThickness(2);
                         button4.setOutlineColor(sf::Color::Black);
                         button4.setFillColor(sf::Color::Red);
+
+                        /* Fourth Button Text */
+                        sf::Text buttonText4("D", font, 20);
+                        buttonText4.setFillColor(sf::Color::White);
+                        sf::FloatRect textRect4 = buttonText4.getLocalBounds();
+                        buttonText4.setOrigin(textRect4.left + textRect4.width / 2.0f, textRect4.top + textRect4.height / 2.0f);
+                        buttonText4.setPosition(button4.getPosition() + 0.5f * button4.getSize());
 
                         while (window.isOpen())
                         {
@@ -375,7 +392,9 @@ int main()
                             window.draw(button2);
                             window.draw(buttonText2);
                             window.draw(button3);
+                            window.draw(buttonText3);
                             window.draw(button4);
+                            window.draw(buttonText4);
                             window.display();
                         }
 
