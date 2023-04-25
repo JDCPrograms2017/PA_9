@@ -13,6 +13,11 @@ public:
 		numQuestionsIncorrect = 0;
 		correctToIncorrectRatio = 0.0;
 	}
+	
+	void set_the_Position(const sf::Vector2f position)
+	{
+		this->setPosition(position);
+	}
 
 	sf::Sprite& getDrawableObject() {
 		return dynamic_cast<sf::Sprite&>(*this);
