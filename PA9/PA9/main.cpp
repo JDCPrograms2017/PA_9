@@ -17,9 +17,12 @@
 #include <iostream>
 #include "Character.h"
 #include "Button.hpp"
+#include <fstream>
+#include <string>
 
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite& backgroundRef);
 sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef);
+std::string readFromFile(std::ifstream& file);
 
 int main()
 {
@@ -42,12 +45,12 @@ int main()
     // text generated on screen
     sf::Text text;
     text.setFont(font);
-    text.setCharacterSize(30);
+    text.setCharacterSize(25);
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Regular);
-    text.setString("\"You look lonely, I could fix that...\"");
-    text.setPosition(250, 475);
-
+    text.setString("\"One lonely night, you get a match on Tinder and suprisingly, the girl texts first.\"");
+    text.setPosition(230, 650);
+    
 
     // This is the texture and mapping for the background
     // Background
@@ -56,20 +59,21 @@ int main()
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
+    sf::Texture empty_texture;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
-    gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
+    gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
+    empty_texture.loadFromFile("Textures/empty.png");
     resetBackgroundScale(window, menuBackgroundTexture, background);
 
-    // This is the texture and mapping for where the text will go when she speaks
-    // text box
+    // This is the texture and mapping for the text box for when she speaks
     sf::RectangleShape rec_shape;
-    rec_shape.setSize(sf::Vector2f(1261, 569));
+    rec_shape.setSize(sf::Vector2f(1400, 569));
     sf::Texture text_Texture;
-    text_Texture.loadFromFile("Textures/text_box.png");
+    text_Texture.loadFromFile("Textures/ui.png");
     rec_shape.setTexture(&text_Texture);
-    rec_shape.setPosition(-20, 200);
+    rec_shape.setPosition(-20, 350);
 
 
     // andy's dream girl, added polymorphism
@@ -100,16 +104,22 @@ int main()
     newPlayGameBtn.setButtonTextFont(font);
     //Text Position: (653, 655)
 
+    // use this to click thru text
+    Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
+
+
 
     bool isFullscreen = true;
     bool menuMode = true;
     bool aboutMode = false;
 
     music.play();
+    std::ifstream file("lines.txt");
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
         sf::Event event;
+ 
         while (window.pollEvent(event))
         {
             window.clear();
@@ -167,9 +177,19 @@ int main()
 
             // Run the game
             else {
-                window.draw(girl.getDrawableObject());
+                //window.draw(girl.getDrawableObject());
+            /*    continue_button.draw(window);*/
                 window.draw(rec_shape);
                 window.draw(text);
+
+                if (continue_button.isBeingPushed(window))
+                {
+
+                    text.setString(readFromFile(file));
+                    window.draw(text);
+
+                }
+                
             }
         }
 
@@ -194,4 +214,13 @@ sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::RenderWindo
     sf::Vector2f result(0, 0);
     return result;
     //WORK IN PROGRESS
+}
+
+std::string readFromFile(std::ifstream& file)
+{
+    std::string temp;
+    getline(file,temp);
+    return temp;
+
+
 }
