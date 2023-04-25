@@ -58,8 +58,8 @@ int main()
     sf::Vector2f backgroundResizeValue;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/funny.jpg");
-    aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     background.setPosition(0, 0);
+    aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     resetBackgroundScale(window, menuBackgroundTexture, background);
 
     // This is the texture and mapping for where the text will go when she speaks
@@ -79,46 +79,28 @@ int main()
 
 
     // menu buttons
-
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/pink-button.png");
-    Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture);
-    sf::Text playGameText;
-    playGameText.setFont(font);
-    playGameText.setCharacterSize(30);
-    playGameText.setFillColor(sf::Color::White);
-    playGameText.setStyle(sf::Text::Regular);
-    playGameText.setString("Play Game");
-    playGameText.setPosition(823, 505);
-    Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture);
-    sf::Text aboutGameText;
-    aboutGameText.setFont(font);
-    aboutGameText.setCharacterSize(30);
-    aboutGameText.setFillColor(sf::Color::White);
-    aboutGameText.setStyle(sf::Text::Regular);
-    aboutGameText.setString("About Game");
-    aboutGameText.setPosition(820, 580);
+    Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
+    sf::CircleShape debugDot(4);
+    debugDot.setFillColor(sf::Color::Red);
+    playGameBtn.setButtonTextFont(font);
+    //Text position: (823, 505)
+
+    Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture, "About Game");
+    aboutGameBtn.setButtonTextFont(font);
+    //Text Postition: (820, 580)
+
     sf::Texture exitBtnTexture;
     exitBtnTexture.loadFromFile("Textures/exit.png");
-    Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture);
-    sf::Text exitText;
-    exitText.setFont(font);
-    exitText.setCharacterSize(30);
-    exitText.setFillColor(sf::Color::White);
-    exitText.setStyle(sf::Text::Regular);
-    exitText.setString("Exit");
-    exitText.setPosition(1320, 730);
+    Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture, "Exit");
+    exitBtn.setButtonTextFont(font);
+    //Text Position: (1320, 730)
 
     // about screen - exit button stays the same, changing position of play game button
-    Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture);
-    sf::Text newPlayGameText;
-    newPlayGameText.setFont(font);
-    newPlayGameText.setCharacterSize(30);
-    newPlayGameText.setFillColor(sf::Color::White);
-    newPlayGameText.setStyle(sf::Text::Regular);
-    newPlayGameText.setString("Play Game");
-    newPlayGameText.setPosition(653, 655);
-
+    Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture, "Play Game");
+    newPlayGameBtn.setButtonTextFont(font);
+    //Text Position: (653, 655)
 
 
     bool isFullscreen = true;
@@ -128,8 +110,6 @@ int main()
     music.play();
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
-
-
 
         sf::Event event;
         while (window.pollEvent(event))
@@ -157,20 +137,16 @@ int main()
             // Display all of the menu features
             if (menuMode) {
                 window.draw(playGameBtn.getDrawableShape());
-
-                window.draw(playGameText);
                 window.draw(aboutGameBtn.getDrawableShape());
-                window.draw(aboutGameText);
                 window.draw(exitBtn.getDrawableShape());
-                window.draw(exitText);
-
-
+                playGameBtn.draw(window);
+                debugDot.setPosition(playGameBtn.getOrigin());
+                window.draw(debugDot);
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     menuMode = false;
                 }
 
-                
                 if (aboutGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, aboutBackgroundTexture, background);
                     aboutMode = true;
@@ -181,12 +157,9 @@ int main()
                     window.close();
                 }
             }
-            // about game screen
             else if (aboutMode) {
                 window.draw(exitBtn.getDrawableShape());
-                window.draw(exitText);
                 window.draw(newPlayGameBtn.getDrawableShape());
-                window.draw(newPlayGameText);
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
@@ -195,7 +168,6 @@ int main()
                 if (exitBtn.isBeingPushed(window)) {
                     window.close();
                 }
-
             }
             // Run the game
             else {
