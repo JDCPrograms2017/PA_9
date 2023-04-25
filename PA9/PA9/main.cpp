@@ -82,8 +82,6 @@ int main()
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/pink-button.png");
     Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
-    sf::CircleShape debugDot(4);
-    debugDot.setFillColor(sf::Color::Red);
     playGameBtn.setButtonTextFont(font);
     //Text position: (823, 505)
 
@@ -136,12 +134,9 @@ int main()
 
             // Display all of the menu features
             if (menuMode) {
-                window.draw(playGameBtn.getDrawableShape());
-                window.draw(aboutGameBtn.getDrawableShape());
-                window.draw(exitBtn.getDrawableShape());
+                aboutGameBtn.draw(window);
+                exitBtn.draw(window);
                 playGameBtn.draw(window);
-                debugDot.setPosition(playGameBtn.getOrigin());
-                window.draw(debugDot);
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     menuMode = false;
@@ -158,8 +153,8 @@ int main()
                 }
             }
             else if (aboutMode) {
-                window.draw(exitBtn.getDrawableShape());
-                window.draw(newPlayGameBtn.getDrawableShape());
+                exitBtn.draw(window);
+                newPlayGameBtn.draw(window);
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
@@ -169,6 +164,7 @@ int main()
                     window.close();
                 }
             }
+
             // Run the game
             else {
                 window.draw(girl.getDrawableObject());

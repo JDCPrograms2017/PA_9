@@ -15,26 +15,32 @@ void Button::changeButtonTexture(sf::Texture& newTexture) {
 	dynamic_cast<sf::RectangleShape&>(*this).setTexture(&newTexture);
 }
 
-void Button::draw(sf::RenderWindow& window) {
-	// create a rectangle shape to represent the local bounding box
-	sf::FloatRect bounds(buttonText.getLocalBounds());
-	sf::RectangleShape rect(sf::Vector2f(bounds.width, bounds.height));
-	rect.setFillColor(sf::Color::Transparent);
-	rect.setOutlineColor(sf::Color::Red);
-	rect.setOutlineThickness(1.f);
-	rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
-
-	sf::FloatRect boundsButton(this->getLocalBounds());
-	sf::RectangleShape rectButton(sf::Vector2f(boundsButton.width, boundsButton.height));
-	rectButton.setFillColor(sf::Color::Transparent);
-	rectButton.setOutlineColor(sf::Color::Red);
-	rectButton.setOutlineThickness(1.f);
-	rectButton.setPosition(this->getPosition().x + boundsButton.left, this->getPosition().y + boundsButton.top);
+void Button::draw(sf::RenderWindow& window, bool debug) {
+	recomputeTextPosition();
 
 	window.draw(this->getDrawableShape());
 	window.draw(buttonText);
-	window.draw(rect);
-	window.draw(rectButton);
+
+	if (debug) {
+		// create a rectangle shape to represent the local bounding box
+		sf::FloatRect bounds(buttonText.getLocalBounds());
+		//std::cout << "Local bounds: " << bounds.width << ", " << bounds.height << std::endl;
+		sf::RectangleShape rect(sf::Vector2f(bounds.width, bounds.height));
+		rect.setFillColor(sf::Color::Transparent);
+		rect.setOutlineColor(sf::Color::Red);
+		rect.setOutlineThickness(1.f);
+		rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
+
+		sf::FloatRect boundsButton(this->getLocalBounds());
+		sf::RectangleShape rectButton(sf::Vector2f(boundsButton.width, boundsButton.height));
+		rectButton.setFillColor(sf::Color::Transparent);
+		rectButton.setOutlineColor(sf::Color::Red);
+		rectButton.setOutlineThickness(1.f);
+		rectButton.setPosition(this->getPosition().x + boundsButton.left, this->getPosition().y + boundsButton.top);
+
+		window.draw(rect);
+		window.draw(rectButton);
+	}
 }
 
 bool Button::getButtonState() {
@@ -49,7 +55,7 @@ bool Button::isBeingPushed(const sf::Window &windowRef) {
 		return true;
 	}
 	else {
-		std::cout << mousePosition.x << ", " << mousePosition.y << " button position: " << this->position.x << ", " << this->position.y << " button size: " << this->getSize().x << ", " << this->getSize().y << std::endl;
+		//std::cout << mousePosition.x << ", " << mousePosition.y << " button position: " << this->position.x << ", " << this->position.y << " button size: " << this->getSize().x << ", " << this->getSize().y << std::endl;
 	}
 
 	return false;
