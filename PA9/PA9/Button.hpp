@@ -30,6 +30,25 @@ public:
 	void setButtonTextFont(sf::Font& fontRef) {
 		buttonText.setFont(fontRef);
 	}
+	void setButtonTextSize(int x)
+	{
+		buttonText.setCharacterSize(x);
+	}
+	void setButtonTextColor(sf::Color color)
+	{
+		buttonText.setFillColor(color);
+	}
+	void setButtonTextPos(const sf::Vector2f& position)
+	{
+		buttonText.setPosition(position);
+	}
+	void setButtonTextOrigin()
+	{
+		sf::FloatRect textRect = buttonText.getLocalBounds();
+		buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+		buttonText.setStyle(sf::Text::Regular);
+	}
+
 
 	void draw(sf::RenderWindow& window);
 

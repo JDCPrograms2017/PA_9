@@ -123,62 +123,58 @@ int main()
 
 
     /* First button */
-    sf::RectangleShape button1(sf::Vector2f(500, 100));
-    button1.setPosition(50, 150);
+    Button button1(sf::Vector2f(500, 100), sf::Vector2f(50, 150), sf::Texture(), "A data type that groups several related variables in one place");
     button1.setOutlineThickness(2);
     button1.setOutlineColor(sf::Color::Black);
     button1.setFillColor(sf::Color::Blue);
-
-    /* First Button Text  */
-    sf::Text buttonText("A data type that groups several related variables in one place ", font, 17);
-    buttonText.setFillColor(sf::Color::White);
-    sf::FloatRect textRect = buttonText.getLocalBounds();
-    buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
-    buttonText.setPosition(300,200);
+    button1.setButtonTextSize(17);
+    button1.setButtonTextFont(font);
+    button1.setButtonTextOrigin();
+    button1.setButtonTextPos(sf::Vector2f(300, 200));
 
 
-    /* Second Button */
-    sf::RectangleShape button2(sf::Vector2f(500, 100));
-    button2.setPosition(50, 250);
-    button2.setOutlineThickness(2);
-    button2.setOutlineColor(sf::Color::Black);
-    button2.setFillColor(sf::Color::Blue);
+    ///* Second Button */
+    //sf::RectangleShape button2(sf::Vector2f(500, 100));
+    //button2.setPosition(50, 250);
+    //button2.setOutlineThickness(2);
+    //button2.setOutlineColor(sf::Color::Black);
+    //button2.setFillColor(sf::Color::Blue);
 
-    /* Second Button Text */
-    sf::Text buttonText2("A dynamic data structure that holds multiple functions ", font, 17);
-    buttonText2.setFillColor(sf::Color::White);
-    sf::FloatRect textRect2 = buttonText2.getLocalBounds();
-    buttonText2.setOrigin(textRect2.left + textRect2.width / 2.0f, textRect2.top + textRect2.height / 2.0f);
-    buttonText2.setPosition(300,300);
+    ///* Second Button Text */
+    //sf::Text buttonText2("A dynamic data structure that holds multiple functions ", font, 17);
+    //buttonText2.setFillColor(sf::Color::White);
+    //sf::FloatRect textRect2 = buttonText2.getLocalBounds();
+    //buttonText2.setOrigin(textRect2.left + textRect2.width / 2.0f, textRect2.top + textRect2.height / 2.0f);
+    //buttonText2.setPosition(300,300);
 
 
-    /* Third Button */
-    sf::RectangleShape button3(sf::Vector2f(500, 100));
-    button3.setPosition(50, 350);
-    button3.setOutlineThickness(2);
-    button3.setOutlineColor(sf::Color::Black);
-    button3.setFillColor(sf::Color::Blue);
+    ///* Third Button */
+    //sf::RectangleShape button3(sf::Vector2f(500, 100));
+    //button3.setPosition(50, 350);
+    //button3.setOutlineThickness(2);
+    //button3.setOutlineColor(sf::Color::Black);
+    //button3.setFillColor(sf::Color::Blue);
 
-    /* Third Button Text */
-    sf::Text buttonText3("A place to store data in the heap", font, 17);
-    buttonText3.setFillColor(sf::Color::White);
-    sf::FloatRect textRect3 = buttonText3.getLocalBounds();
-    buttonText3.setOrigin(textRect3.left + textRect3.width / 2.0f, textRect3.top + textRect3.height / 2.0f);
-    buttonText3.setPosition(300,400);
+    ///* Third Button Text */
+    //sf::Text buttonText3("A place to store data in the heap", font, 17);
+    //buttonText3.setFillColor(sf::Color::White);
+    //sf::FloatRect textRect3 = buttonText3.getLocalBounds();
+    //buttonText3.setOrigin(textRect3.left + textRect3.width / 2.0f, textRect3.top + textRect3.height / 2.0f);
+    //buttonText3.setPosition(300,400);
 
-    /* Fourth Button */
-    sf::RectangleShape button4(sf::Vector2f(500, 100));
-    button4.setPosition(50, 450);
-    button4.setOutlineThickness(2);
-    button4.setOutlineColor(sf::Color::Black);
-    button4.setFillColor(sf::Color::Blue);
+    ///* Fourth Button */
+    //sf::RectangleShape button4(sf::Vector2f(500, 100));
+    //button4.setPosition(50, 450);
+    //button4.setOutlineThickness(2);
+    //button4.setOutlineColor(sf::Color::Black);
+    //button4.setFillColor(sf::Color::Blue);
 
-    /* Fourth Button Text */
-    sf::Text buttonText4("A binary search tree", font, 17);
-    buttonText4.setFillColor(sf::Color::White);
-    sf::FloatRect textRect4 = buttonText4.getLocalBounds();
-    buttonText4.setOrigin(textRect4.left + textRect4.width / 2.0f, textRect4.top + textRect4.height / 2.0f);
-    buttonText4.setPosition(300,500);
+    ///* Fourth Button Text */
+    //sf::Text buttonText4("A binary search tree", font, 17);
+    //buttonText4.setFillColor(sf::Color::White);
+    //sf::FloatRect textRect4 = buttonText4.getLocalBounds();
+    //buttonText4.setOrigin(textRect4.left + textRect4.width / 2.0f, textRect4.top + textRect4.height / 2.0f);
+    //buttonText4.setPosition(300,500);
 
   
 
@@ -278,26 +274,27 @@ int main()
                 {
                     window.draw(inputBox);
                     window.draw(inputText);
-                    window.draw(button1);
-                    window.draw(buttonText);
-                    window.draw(button2);
-                    window.draw(buttonText2);
-                    window.draw(button3);
-                    window.draw(buttonText3);
-                    window.draw(button4);
-                    window.draw(buttonText4);
+                    button1.draw(window);
                     girl.set_the_Position(sf::Vector2f(800, -100));
 
                     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
                         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
-                        if (button1.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                        if (button1.isBeingPushed(window))
                         {
-                            std::cout << "Correct Answer!" << std::endl;
+                            text.setString("Good job! If you failed this one I would be concerned...");
                             ++i;
                             ++failsafe;
                         }
+
+                        //if (button2.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button3.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button4.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                        //{
+                        //    std::cout << "Wrong Answer!" << std::endl;
+                        //    text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
+                        //    ++i;
+                        //    ++failsafe;
+                        //}
 
                     }
                 }
