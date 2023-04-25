@@ -15,14 +15,15 @@ void Button::changeButtonTexture(sf::Texture& newTexture) {
 	dynamic_cast<sf::RectangleShape&>(*this).setTexture(&newTexture);
 }
 
-void Button::draw(sf::RenderWindow& window, bool debug) {
+void Button::draw(sf::RenderWindow& window, bool debugMode) {
 	recomputeTextPosition();
 
 	window.draw(this->getDrawableShape());
 	window.draw(buttonText);
 
-	if (debug) {
-		// create a rectangle shape to represent the local bounding box
+
+	// create a rectangle shape to represent the local bounding box
+	if (debugMode) {
 		sf::FloatRect bounds(buttonText.getLocalBounds());
 		//std::cout << "Local bounds: " << bounds.width << ", " << bounds.height << std::endl;
 		sf::RectangleShape rect(sf::Vector2f(bounds.width, bounds.height));
@@ -40,7 +41,9 @@ void Button::draw(sf::RenderWindow& window, bool debug) {
 
 		window.draw(rect);
 		window.draw(rectButton);
+		//std::cout << "test";
 	}
+	
 }
 
 bool Button::getButtonState() {

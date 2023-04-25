@@ -21,6 +21,19 @@ public:
 		buttonText.setStyle(sf::Text::Bold);
 	};
 
+	Button(const sf::Vector2f& newSize = sf::Vector2f(0, 0),
+		const sf::Vector2f& newPos = sf::Vector2f(0, 0),
+		std::string insideText = "No text") : sf::RectangleShape(newSize), position(newPos) {
+
+		toggle = false;
+		std::cout << "New button created!\n";
+		buttonText.setFillColor(sf::Color::White);
+		this->setPosition(position);
+
+		if (insideText != "No text") buttonText.setString(insideText), std::cout << "Set string text!";
+		buttonText.setStyle(sf::Text::Bold);
+	};
+
 	void toggleButton();
 	void setPosition(sf::Vector2f &newPosition);
 	void changeButtonTexture(sf::Texture& newTexture);
@@ -31,7 +44,7 @@ public:
 		buttonText.setFont(fontRef);
 	}
 
-	void draw(sf::RenderWindow& window, bool debug = false);
+	void draw(sf::RenderWindow& window, bool debugMode = false);
 
 	// Centering button text in the middle of the button - CREDIT: Username = Mario https://stackoverflow.com/questions/49346432/how-to-center-a-sftext-in-a-sfrectangleshape
 	void recomputeTextPosition() {
