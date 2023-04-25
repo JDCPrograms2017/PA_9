@@ -202,6 +202,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.hpp" />
+    <ClInclude Include="Character.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="lines.txt" />
