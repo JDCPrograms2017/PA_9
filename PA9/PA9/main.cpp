@@ -33,6 +33,7 @@ int main()
 
 
     int ticker = 0;
+    int socialKarma = 0;
 
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
@@ -282,6 +283,12 @@ int main()
 
                     if (ticker == 10)
                     {
+                        
+
+                
+
+
+
 
                         sf::RectangleShape inputBox(sf::Vector2f(270, 80));
                         inputBox.setPosition(50, 50);
@@ -350,6 +357,11 @@ int main()
                         sf::FloatRect textRect4 = buttonText4.getLocalBounds();
                         buttonText4.setOrigin(textRect4.left + textRect4.width / 2.0f, textRect4.top + textRect4.height / 2.0f);
                         buttonText4.setPosition(button4.getPosition() + 0.5f * button4.getSize());
+                       
+
+                          
+                        int i = 0;
+                        int failsafe = 0;
 
                         while (window.isOpen())
                         {
@@ -368,37 +380,76 @@ int main()
                                 }
                             }
 
+
+                            if (i == 0 && failsafe == 0)
+                            {
+                                window.draw(inputBox);
+                                window.draw(inputText);
+                                window.draw(button1);
+                                window.draw(buttonText);
+                                window.draw(button2);
+                                window.draw(buttonText2);
+                                window.draw(button3);
+                                window.draw(buttonText3);
+                                window.draw(button4);
+                                window.draw(buttonText4);
+                                window.display();
+                            }
+                            else
+                            {
+                                window.clear();
+                                window.draw(rec_shape);
+                                window.draw(text);
+                            }
+                           
+
                             if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                             {
+                               
                                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
                                 if (button1.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
                                 {
                                     std::cout << "Correct Answer!" << std::endl;
-                                    ticker++;
-                                }
+                                    i++;
+                                    failsafe++;
+                                    
+                                
+                                }  
 
                                 if (button2.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button3.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button4.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
                                 {
                                     std::cout << "Wrong Answer!" << std::endl;
+                                   
+                                    
+                                   
+
+
                                 }
                             }
 
-                          
-                            window.draw(inputBox);
-                            window.draw(inputText);
-                            window.draw(button1);
-                            window.draw(buttonText);
-                            window.draw(button2);
-                            window.draw(buttonText2);
-                            window.draw(button3);
-                            window.draw(buttonText3);
-                            window.draw(button4);
-                            window.draw(buttonText4);
-                            window.display();
+                            
+                           
+                           
+
+                           
+                       
                         }
 
                     }
+
+                    
+
+                    if (ticker >= 11)
+                    {
+                        // Draw scene
+                        window.clear();
+                        resetBackgroundScale(window, gamePandaInterior, background);
+
+                        text.setString(readFromFile(file));
+                        window.draw(text);
+                    }
+
 
                 }
 
