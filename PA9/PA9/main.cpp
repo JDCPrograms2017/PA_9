@@ -20,13 +20,25 @@
 #include <fstream>
 #include <string>
 
+
+
+
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite& backgroundRef);
 sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef);
 std::string readFromFile(std::ifstream& file);
 
 int main()
 {
+
+
+
+    int ticker = 0;
+
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
+
+
+    
+
 
     // music
     sf::Music music;
@@ -55,17 +67,28 @@ int main()
     // This is the texture and mapping for the background
     // Background
     sf::Sprite background;
+
+    /*Textures by Level*/
     sf::Texture gameBackgroundTexture;
+    sf::Texture gameFancyPanda;
+    sf::Texture gamePandaInterior;
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
     sf::Texture empty_texture;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
+
+    /* Game Textures by Level */
     gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
+    gameFancyPanda.loadFromFile("Textures/fancyPanda.jpeg");
+    gamePandaInterior.loadFromFile("Textures/pandaInterior.jpg");
+
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
     resetBackgroundScale(window, menuBackgroundTexture, background);
+
+
 
     // This is the texture and mapping for the text box for when she speaks
     sf::RectangleShape rec_shape;
@@ -115,6 +138,7 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
+    std::ifstream fPanda("linesPanda.txt");
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -161,6 +185,7 @@ int main()
                 if (exitBtn.isBeingPushed(window)) {
                     window.close();
                 }
+
             }
             else if (aboutMode) {
                 exitBtn.draw(window);
@@ -178,17 +203,188 @@ int main()
             // Run the game
             else {
                 //window.draw(girl.getDrawableObject());
-            /*    continue_button.draw(window);*/
+            /*   
+            continue_button.draw(window);*/
                 window.draw(rec_shape);
                 window.draw(text);
-
+              
+                if (ticker >= 9)
+                {
+                    window.draw(girl.getDrawableObject());
+                    window.draw(rec_shape);
+                    window.draw(text);
+                }
+               
                 if (continue_button.isBeingPushed(window))
                 {
-
+                   
+                    ++ticker;
+                    std::cout << ticker;
                     text.setString(readFromFile(file));
                     window.draw(text);
 
+                    if (ticker == 6)
+                    {
+                        /* Transition to the stor vroom vroom */
+                        resetBackgroundScale(window, gameFancyPanda, background);
+                        text.setString(readFromFile(file));
+                        window.draw(text);
+
+                        
+                     
+                    }
+                    if (ticker == 9)
+                    {
+                        /*---- Zoom Effect ------------------------------------------------*/
+
+                        sf::View view(sf::FloatRect(0.f, 0.f, 1440.f, 810.f));
+                        window.setView(view);
+                        // Create target view with smaller rectangle size
+                        sf::View targetView(sf::FloatRect(100.f, 100.f, 500.f, 500.f));
+
+                        // Set zoom factor and calculate step size
+                        float zoomFactor = targetView.getSize().x / view.getSize().x;
+                        float stepSize = (zoomFactor - 1.f) / 5.f;
+
+                        // Perform zoom over 1.5 seconds
+                        sf::Clock zoomClock;
+                        while (zoomClock.getElapsedTime().asSeconds() < 1.5) {
+                            // Calculate current zoom level
+                            float currentZoom = 1.f + (stepSize * zoomClock.getElapsedTime().asSeconds());
+
+                            // Create new view with current zoom level
+                            sf::View zoomView(view.getCenter(), view.getSize() * currentZoom);
+                            window.setView(zoomView);
+
+                            // Draw scene
+                            window.clear();
+                            window.draw(background);
+                            window.display();
+
+
+
+                        }
+
+                        // Switch back to original view
+                        window.setView(view);
+
+                        /*------------------------------------------------------------*/
+
+                        
+                        /* Transition to the stor vroom vroom */
+
+                        resetBackgroundScale(window, gamePandaInterior, background);
+                        
+                        text.setString(readFromFile(file));
+                        window.draw(text);
+                       
+                    }
+
+                    if (ticker == 10)
+                    {
+
+                        sf::RectangleShape inputBox(sf::Vector2f(270, 80));
+                        inputBox.setPosition(50, 50);
+                        inputBox.setOutlineThickness(2);
+                        inputBox.setOutlineColor(sf::Color::Black);
+                        inputBox.setFillColor(sf::Color::White);
+
+                        sf::Text inputText("Mock Queston what 5+5", font, 20);
+                        inputText.setPosition(60, 60);
+                        inputText.setFillColor(sf::Color::Black);
+
+                        /* First button */
+                        sf::RectangleShape button1(sf::Vector2f(100, 50));
+                        button1.setPosition(50, 150);
+                        button1.setOutlineThickness(2);
+                        button1.setOutlineColor(sf::Color::Black);
+                        button1.setFillColor(sf::Color::Green);
+                        /* First Button Text  */
+                        sf::Text buttonText("A", font, 20);
+                        buttonText.setFillColor(sf::Color::White);
+                        sf::FloatRect textRect = buttonText.getLocalBounds();
+                        buttonText.setOrigin(textRect.left + textRect.width / 2.0f, textRect.top + textRect.height / 2.0f);
+                        buttonText.setPosition(button1.getPosition() + 0.5f * button1.getSize());
+
+
+
+                        sf::RectangleShape button2(sf::Vector2f(100, 50));
+                        button2.setPosition(50, 250);
+                        button2.setOutlineThickness(2);
+                        button2.setOutlineColor(sf::Color::Black);
+                        button2.setFillColor(sf::Color::Red);
+
+                        sf::Text buttonText2("B", font, 20);
+                        buttonText2.setFillColor(sf::Color::White);
+                        sf::FloatRect textRect2 = buttonText2.getLocalBounds();
+                        buttonText2.setOrigin(textRect2.left + textRect2.width / 2.0f, textRect2.top + textRect2.height / 2.0f);
+                        buttonText2.setPosition(button2.getPosition() + 0.5f * button2.getSize());
+
+
+
+                        sf::RectangleShape button3(sf::Vector2f(100, 50));
+                        button3.setPosition(200, 150);
+                        button3.setOutlineThickness(2);
+                        button3.setOutlineColor(sf::Color::Black);
+                        button3.setFillColor(sf::Color::Red);
+
+                        sf::RectangleShape button4(sf::Vector2f(100, 50));
+                        button4.setPosition(200, 250);
+                        button4.setOutlineThickness(2);
+                        button4.setOutlineColor(sf::Color::Black);
+                        button4.setFillColor(sf::Color::Red);
+
+                        while (window.isOpen())
+                        {
+                            sf::Event event;
+                            while (window.pollEvent(event))
+                            {
+                                if (event.type == sf::Event::Closed)
+                                    window.close();
+
+                                if (event.type == sf::Event::TextEntered)
+                                {
+                                    if (event.text.unicode < 128)
+                                    {
+                                        inputText.setString(inputText.getString() + static_cast<char>(event.text.unicode));
+                                    }
+                                }
+                            }
+
+                            if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                            {
+                                sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+                                if (button1.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                                {
+                                    std::cout << "Correct Answer!" << std::endl;
+                                    ticker++;
+                                }
+
+                                if (button2.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button3.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)) || button4.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                                {
+                                    std::cout << "Wrong Answer!" << std::endl;
+                                }
+                            }
+
+                          
+                            window.draw(inputBox);
+                            window.draw(inputText);
+                            window.draw(button1);
+                            window.draw(buttonText);
+                            window.draw(button2);
+                            window.draw(buttonText2);
+                            window.draw(button3);
+                            window.draw(button4);
+                            window.display();
+                        }
+
+                    }
+
                 }
+
+
+               
                 
             }
         }
@@ -224,3 +420,8 @@ std::string readFromFile(std::ifstream& file)
 
 
 }
+
+
+
+
+
