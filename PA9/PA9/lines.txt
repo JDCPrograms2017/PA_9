@@ -1,5 +1,28 @@
-"The only thing she says is to reverse a singly linked list and print out its contents in O(n) time"
-"You're a little weirded out, but you do it anyways because you listen to your professors lectures"
-"Once you copy paste the code, she immediatly sends you an address, a date, and a time"
-"and sends nothing else"
-"You're creeped out at this point, but you decide to go to the place she sent anyways"
+The only thing she says is to reverse a singly linked list and print out its contents in O(n) time
+You're a little weirded out, but you do it anyways because you listen to your professors lectures
+Once you copy paste the code, she immediatly sends you an address, a date, and a time
+and sends nothing else
+You're creeped out at this point, but you decide to go to the place she sent anyways
+You arrive at the location, and it's a cafe
+You don't see the girl anywhere, so you order a coffee and cautiously sit down
+Suddenly, a girl walks in and sits down in front of you
+She looks slightly annoyed, and stares at you with judgemental eyes
+"Answer me in five seconds or I'll walk out of this cafe. What is recursion?"
+You stammer out: "U-uh, calling a function calling itself?"
+She relaxes her face a little and smiles: "Good enough. Most people can't even answer that!"
+"I'm Clara! Nice to meet you! I don't really trust people's responses to the coding"
+problem since they use chat-gbt. What has the world come to?"
+You stare at her dumbfounded. 
+You muster the courage the speak: "Am I tripping? Why are you so into coding?"
+She laughs and looks into with a twinkle in her eyes: "I'm into guys who know how to code,of course!"
+"In fact, if they can't code to my standards, I won't even talk to them."
+You stare at her confused: "Wait, so do you have any other hobbies? Or..."
+She suddenly gets serious and stares directly at you: "No. Only coding."
+At this point she's a walking red flag. You silently get up to leave when she
+grabs your hand and tugs you back down.
+"Wait! I know this is weird but you're the only person I've talked who knows coding this much!
+I'll give you a deal. If you answer all my coding questions then I'll reveal that my actual
+hobbies and I'll be loyal to you for life! Just answer my coding questions and I'm yours!"
+You take a moment to reconsider. If you squint really hard, she is kinda your type...
+You sigh and sit back down. "Fine, you win. Now give me your questions."
+She smiles with a devious grin. "Heheheh..."

@@ -53,6 +53,7 @@ bool Button::isBeingPushed(const sf::Window &windowRef) {
 	bool mouseClicked = sf::Mouse::isButtonPressed(sf::Mouse::Left); // Sees if we are clicking with the left mouse button.
 
 	if (mouseClicked && mousePosition.x >= this->position.x && mousePosition.x <= (this->position.x + this->getSize().x) && mousePosition.y >= this->position.y && mousePosition.y <= (this->position.y + this->getSize().y)) {
+		std::cout << "test" << std::endl;
 		return true;
 	}
 	else {

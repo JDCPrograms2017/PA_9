@@ -49,12 +49,14 @@ int main()
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Regular);
     text.setString("\"One lonely night, you get a match on Tinder and suprisingly, the girl texts first.\"");
-    text.setPosition(230, 650);
+    text.setPosition(180, 650);
     
 
     // This is the texture and mapping for the background
     // Background
     sf::Sprite background;
+    sf::Sprite sceneOneBackground;
+    sf::Texture sceneOneTexture;
     sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
@@ -65,7 +67,8 @@ int main()
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
-    resetBackgroundScale(window, menuBackgroundTexture, background);
+    sceneOneTexture.loadFromFile("Textures/cafe.jpg");
+    resetBackgroundScale(window, menuBackgroundTexture, background); 
 
     // This is the texture and mapping for the text box for when she speaks
     sf::RectangleShape rec_shape;
@@ -107,6 +110,7 @@ int main()
     // use this to click thru text
     Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
 
+  
 
 
     bool isFullscreen = true;
@@ -115,6 +119,7 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
+    int i = 0;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -178,18 +183,29 @@ int main()
             // Run the game
             else {
                 //window.draw(girl.getDrawableObject());
-            /*    continue_button.draw(window);*/
+                /*    continue_button.draw(window);*/
+                if (i >= 8)
+                {
+                    window.draw(girl.getDrawableObject());
+                }
                 window.draw(rec_shape);
                 window.draw(text);
+                if (i == 6)
+                {
+                    resetBackgroundScale(window, sceneOneTexture, background);
+
+                }
+
 
                 if (continue_button.isBeingPushed(window))
                 {
-
+                    ++i;
                     text.setString(readFromFile(file));
-                    window.draw(text);
 
                 }
+
                 
+
             }
         }
 
