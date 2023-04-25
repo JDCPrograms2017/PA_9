@@ -21,7 +21,6 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 	window.draw(this->getDrawableShape());
 	window.draw(buttonText);
 
-
 	// create a rectangle shape to represent the local bounding box
 	if (debugMode) {
 		sf::FloatRect bounds(buttonText.getLocalBounds());
@@ -31,13 +30,6 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 		rect.setOutlineColor(sf::Color::Red);
 		rect.setOutlineThickness(1.f);
 		rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
-
-		sf::FloatRect boundsButton(this->getLocalBounds());
-		sf::RectangleShape rectButton(sf::Vector2f(boundsButton.width, boundsButton.height));
-		rectButton.setFillColor(sf::Color::Transparent);
-		rectButton.setOutlineColor(sf::Color::Red);
-		rectButton.setOutlineThickness(1.f);
-		rectButton.setPosition(this->getPosition().x + boundsButton.left, this->getPosition().y + boundsButton.top);
 
 		window.draw(rect);
 		window.draw(rectButton);
@@ -55,6 +47,7 @@ bool Button::isBeingPushed(const sf::Window &windowRef) {
 	bool mouseClicked = sf::Mouse::isButtonPressed(sf::Mouse::Left); // Sees if we are clicking with the left mouse button.
 
 	if (mouseClicked && mousePosition.x >= this->position.x && mousePosition.x <= (this->position.x + this->getSize().x) && mousePosition.y >= this->position.y && mousePosition.y <= (this->position.y + this->getSize().y)) {
+		std::cout << "test" << std::endl;
 		return true;
 	}
 	else {
