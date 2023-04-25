@@ -22,9 +22,7 @@ public:
 		this->setPosition(position);
 
 		if (insideText != "No text") buttonText.setString(insideText), std::cout << "Set string text!";
-		//buttonText.setCharacterSize((int)(newSize.x / 10));
 		buttonText.setStyle(sf::Text::Bold);
-		recomputeTextPosition();
 	};
 
 	void toggleButton();
@@ -37,21 +35,18 @@ public:
 		buttonText.setFont(fontRef);
 	}
 
-	void draw(sf::RenderWindow& window);
+	void draw(sf::RenderWindow& window, bool debug = false);
 
 	// Centering button text in the middle of the button - CREDIT: Username = Mario https://stackoverflow.com/questions/49346432/how-to-center-a-sftext-in-a-sfrectangleshape
 	void recomputeTextPosition() {
-		buttonText.setOrigin(buttonText.getScale().x / 2, buttonText.getScale().y);
-		buttonText.setPosition(this->getPosition()); // bases the position of the button text where the button itself is.
-		const sf::FloatRect bounds(buttonText.getLocalBounds());
-		/*std::cout << "Local bounds of the text:" << std::endl;
-		std::cout << "Left: " << bounds.left << std::endl;
-		std::cout << "Top: " << bounds.top << std::endl;
-		std::cout << "Width: " << bounds.width << std::endl;
-		std::cout << "Height: " << bounds.height << std::endl;*/
-		const sf::Vector2f box(this->getSize());
-		buttonText.setPosition((box.x ), (box.y ));
-		//buttonText.setOrigin((bounds.width - box.x) / 2 + bounds.left, (bounds.height - box.y) / 2 + bounds.top);
+		sf::FloatRect textBounds = buttonText.getLocalBounds();
+		//std::cout << "Local bounds: " << textBounds.width << ", " << textBounds.height << std::endl;
+		sf::FloatRect buttonBounds = this->getLocalBounds();
+		sf::Vector2f buttonPosition = this->getPosition();
+
+		buttonText.setOrigin(textBounds.width / 2, textBounds.height / 2);
+
+		buttonText.setPosition(buttonPosition.x + (buttonBounds.width / 2), buttonPosition.y + (buttonBounds.height / 2) - 5); // The -5 is just a little correction to make it look better.
 	}
 
 	bool getButtonState();
