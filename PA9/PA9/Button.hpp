@@ -35,7 +35,7 @@ public:
 		buttonText.setFont(fontRef);
 	}
 
-	void draw(sf::RenderWindow& window, bool debug = false);
+	void draw(sf::RenderWindow& window);
 
 	// Centering button text in the middle of the button - CREDIT: Username = Mario https://stackoverflow.com/questions/49346432/how-to-center-a-sftext-in-a-sfrectangleshape
 	void recomputeTextPosition() {

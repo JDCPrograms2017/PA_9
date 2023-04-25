@@ -35,4 +35,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="lines.txt">
+      <Filter>Header Files\Resource Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
