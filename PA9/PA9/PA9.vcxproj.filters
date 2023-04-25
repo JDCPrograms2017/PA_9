@@ -39,5 +39,8 @@
     <Text Include="lines.txt">
       <Filter>Header Files\Resource Files</Filter>
     </Text>
+    <Text Include="linesPanda.txt">
+      <Filter>Header Files\Resource Files\media</Filter>
+    </Text>
   </ItemGroup>
 </Project>
