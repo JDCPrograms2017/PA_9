@@ -15,12 +15,22 @@ void Button::changeButtonTexture(sf::Texture& newTexture) {
 	dynamic_cast<sf::RectangleShape&>(*this).setTexture(&newTexture);
 }
 
-void Button::draw(sf::RenderWindow& window) {
+void Button::draw(sf::RenderWindow& window, bool debugMode) {
 	recomputeTextPosition();
 
 	window.draw(this->getDrawableShape());
 	window.draw(buttonText);
 
+
+	// create a rectangle shape to represent the local bounding box
+	if (debugMode) {
+		sf::FloatRect bounds(buttonText.getLocalBounds());
+		//std::cout << "Local bounds: " << bounds.width << ", " << bounds.height << std::endl;
+		sf::RectangleShape rect(sf::Vector2f(bounds.width, bounds.height));
+		rect.setFillColor(sf::Color::Transparent);
+		rect.setOutlineColor(sf::Color::Red);
+		rect.setOutlineThickness(1.f);
+		rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
 
 	// create a rectangle shape to represent the local bounding box
 	sf::FloatRect bounds(buttonText.getLocalBounds());
@@ -31,16 +41,10 @@ void Button::draw(sf::RenderWindow& window) {
 	rect.setOutlineThickness(1.f);
 	rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
 
-	sf::FloatRect boundsButton(this->getLocalBounds());
-	sf::RectangleShape rectButton(sf::Vector2f(boundsButton.width, boundsButton.height));
-	rectButton.setFillColor(sf::Color::Transparent);
-	rectButton.setOutlineColor(sf::Color::Red);
-	rectButton.setOutlineThickness(1.f);
-	rectButton.setPosition(this->getPosition().x + boundsButton.left, this->getPosition().y + boundsButton.top);
-
-	window.draw(rect);
-	window.draw(rectButton);
-	//std::cout << "test";
+		window.draw(rect);
+		window.draw(rectButton);
+		//std::cout << "test";
+	}
 	
 }
 
