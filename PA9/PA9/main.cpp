@@ -29,17 +29,9 @@ std::string readFromFile(std::ifstream& file);
 
 int main()
 {
-
-
-
     int ticker = 0;
-    int socialKarma = 0;
 
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
-
-
-    
-
 
     // music
     sf::Music music;
@@ -63,7 +55,7 @@ int main()
     text.setStyle(sf::Text::Regular);
     text.setString("\"One lonely night, you get a match on Tinder and suprisingly, the girl texts first.\"");
     text.setPosition(230, 650);
-    
+
 
     // This is the texture and mapping for the background
     // Background
@@ -221,7 +213,7 @@ int main()
     //buttonText4.setOrigin(textRect4.left + textRect4.width / 2.0f, textRect4.top + textRect4.height / 2.0f);
     //buttonText4.setPosition(300,500);
 
-  
+
 
 
     bool isFullscreen = true;
@@ -230,12 +222,12 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
-   
+
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
         sf::Event event;
- 
+
         while (window.pollEvent(event))
         {
             window.clear();
@@ -295,7 +287,7 @@ int main()
             // Run the game
             else {
                 //window.draw(girl.getDrawableObject());
-            /*   
+            /*
             continue_button.draw(window);*/
                 window.draw(rec_shape);
                 window.draw(text);
@@ -313,7 +305,7 @@ int main()
                     text.setString(readFromFile(file));
 
                 }
-                
+
                 if (i == 29 && failsafe == 0)
                 {
                     window.draw(inputBox);
@@ -349,10 +341,10 @@ int main()
                     window.draw(rec_shape);
                     window.draw(text);
                 }
-               
+
                 if (continue_button.isBeingPushed(window))
                 {
-                   
+
                     ++ticker;
                     std::cout << ticker;
                     text.setString(readFromFile(file));
@@ -365,8 +357,8 @@ int main()
                         text.setString(readFromFile(file));
                         window.draw(text);
 
-                        
-                     
+
+
                     }
                     if (ticker == 9)
                     {
@@ -405,25 +397,27 @@ int main()
 
                         /*------------------------------------------------------------*/
 
-                        
+
                         /* Transition to the stor vroom vroom */
 
                         resetBackgroundScale(window, gamePandaInterior, background);
-                        
+
                         text.setString(readFromFile(file));
                         window.draw(text);
-                       
+
                     }
 
 
 
+                }
             }
+
+            window.display();
         }
 
-        window.display();
+        return 0;
     }
 
-    return 0;
 }
 
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite &backgroundRef) {
