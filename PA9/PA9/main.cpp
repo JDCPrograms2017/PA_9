@@ -57,6 +57,10 @@ int main()
     sf::Sprite background;
     sf::Sprite sceneOneBackground;
     sf::Texture sceneOneTexture;
+    sf::Sprite aboutBackground;
+    sf::Sprite menuBackground;
+    sf::Sprite cafeLose;
+    sf::Sprite pandaLose;
     sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
@@ -169,13 +173,6 @@ int main()
     button4.setButtonTextOrigin();
     button4.setButtonTextPos(sf::Vector2f(300, 500));
 
-
-
-
-
-  
-
-
     bool isFullscreen = true;
     bool menuMode = true;
     bool aboutMode = false;
@@ -196,25 +193,28 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::Resized) {
-                // if the window was resized, do something... like reposition our characters
-                resetBackgroundScale(window, gameBackgroundTexture, background);
-            }
-
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
-                if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
-                if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
-
-                resetBackgroundScale(window, gameBackgroundTexture, background);
-
-                isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
-            }
-
             // Display all of the menu features
             if (menuMode) {
                 aboutGameBtn.draw(window);
                 exitBtn.draw(window);
                 playGameBtn.draw(window);
+                if (event.type == sf::Event::Resized) {
+                    isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+                    if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                    if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
+
+                    resetBackgroundScale(window, menuBackgroundTexture, menuBackground);
+                }
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                    if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                    if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
+
+                    resetBackgroundScale(window, menuBackgroundTexture, menuBackground);
+
+                    isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+                }
+
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     menuMode = false;
@@ -231,9 +231,25 @@ int main()
                 }
             }
             else if (aboutMode) {
+                
+                if (event.type == sf::Event::Resized) {
+                    isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+                    if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                    if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
+                    resetBackgroundScale(window, aboutBackgroundTexture, aboutBackground);
+                }
+
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                    if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                    if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
+                    resetBackgroundScale(window, aboutBackgroundTexture, aboutBackground);
+                    isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+                }
+
                 exitBtn.draw(window);
                 newPlayGameBtn.draw(window);
                 window.draw(aboutText);
+
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
@@ -256,8 +272,23 @@ int main()
                 }
                 window.draw(rec_shape);
                 window.draw(text);
-               
 
+                if (i == 6) {
+                    resetBackgroundScale(window, sceneOneTexture, background);
+                    if (event.type == sf::Event::Resized) {
+                        resetBackgroundScale(window, sceneOneTexture, background);
+                    }
+
+
+                    if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
+                        if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
+                        if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
+
+                        resetBackgroundScale(window, sceneOneTexture, background);
+
+                        isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
+                    }
+                }
 
                 if (i < 29 && continue_button.isBeingPushed(window)  )
                 {
