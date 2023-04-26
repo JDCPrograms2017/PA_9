@@ -9,3 +9,7 @@
 *.wsuo
 *.suo
 *.VC
+*.pdb
+*.exe
+*.pdb
+*.obj
