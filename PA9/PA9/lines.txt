@@ -10,7 +10,7 @@ She looks slightly annoyed, and stares at you with judgemental eyes
 "Answer me in five seconds or I'll walk out of this cafe. What is recursion?"
 You stammer out: "U-uh, calling a function calling itself?"
 She relaxes her face a little and smiles: "Good enough. Most people can't even answer that!"
-"I'm Clara! Nice to meet you! I don't really trust people's responses to the coding"
+"I'm Clara! Nice to meet you! I don't really trust people's responses to the coding
 problem since they use chat-gbt. What has the world come to?"
 You stare at her dumbfounded. 
 You muster the courage the speak: "Am I tripping? Why are you so into coding?"
@@ -27,3 +27,12 @@ You take a moment to reconsider. If you squint really hard, she is kinda your ty
 You sigh and sit back down. "Fine, you win. Now give me your questions."
 She smiles with a devious grin. "Heheheh..."
 "Cmon, this should be easy!"
+"Congrats, you completed all my questions!"
+You heave a sigh of relief and stand up: "Ok, we done here? I'm leaving..."
+She stops you and looks deeply into your eyes for a second
+Time seems to stand still.
+She looks conflicted, and then starts to lean in for a kiss. Your heart starts to beat fast
+Suddenly, she pushes you away. "No,no,no, this isn't right..."
+"Meet me tomorrow at that really fancy Panda Express around 7pm. I have one final question."
+"What???", you say, but before you can continue she runs out the door, unable to look you in the eye...
+Confused and concerned, you head back home for the night.

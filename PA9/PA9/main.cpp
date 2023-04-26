@@ -173,7 +173,7 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
-    int i = 0, failsafe = 0;
+    int i = 0, failsafe = 0, win_condition = 0;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -275,7 +275,7 @@ int main()
                             text.setString("Good job! If you failed this one I would be concerned...");
                             ++i;
                             ++failsafe;
-                            
+                            girl.set_interest(win_condition++);
                         }
 
                         if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
@@ -294,7 +294,7 @@ int main()
                 {
                     text.setString("If you can't answer this one, you're an idiot!");
                     inputText.setString("What is a private member of a class?");
-                    button1.setButtonText("A variable or function that cannot be accessed from the outside of a class");
+                    button1.setButtonText("A variable or function that cannot be accessed \nfrom the outside of a class");
                     button2.setButtonText("Idk");
                     button3.setButtonText("A member that can only be accessed using a friend function");
                     button4.setButtonText("A member of a class that is protected");
@@ -305,31 +305,120 @@ int main()
                     button3.draw(window);
                     button4.draw(window);
 
-                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    if (button1.isBeingPushed(window))
                     {
-                        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                        if (button1.isBeingPushed(window))
-                        {
-                            text.setString("Nice! People who are smart are hot ;)");
-                            ++i;
-                            ++failsafe;
-
-                        }
-
-                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
-                        {
-                            std::cout << "Wrong Answer!" << std::endl;
-                            text.setString("Wrong! You're getting uglier the more you get things wrong...");
-                            ++i;
-                            ++failsafe;
+                        text.setString("Nice! People who are smart are hot ;)");
+                        ++i;
+                        ++failsafe;
+                        win_condition++;
+                        girl.set_interest(win_condition++);
                     
-                        }
-
                     }
+                    
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Wrong! You're getting uglier the more you get things wrong...");
+                        ++i;
+                        ++failsafe;
+                    
+                    }
+
+                    
                 }
 
-                
+                if (i == 32 && continue_button.isBeingPushed(window)) { i++; }
+
+                if (i == 33 && failsafe == 2)
+                {
+                    text.setString("Let's make things a little more challenging!");
+                    inputText.setString("Give the big O notation \nfor bubble sort!");
+                    button1.setButtonText("O(n^2)");
+                    button2.setButtonText("O(n)");
+                    button3.setButtonText("O(logn)");
+                    button4.setButtonText("O(logn * n");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Your good at this hehe");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Basic knowledge, do you actually know how to code?");
+                        ++i;
+                        ++failsafe;
+
+                    }
+
+                }
+                if (i == 34 && continue_button.isBeingPushed(window)) { i++; }
+
+                if (i == 35 && failsafe == 3)
+                {
+                    text.setString("One more and we're done!");
+                    inputText.setString("What's your favorite coding language?");
+                    button1.setButtonText("Python");
+                    button2.setButtonText("C");
+                    button3.setButtonText("C++");
+                    button4.setButtonText("Java");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Ew, too basic for my tastes...");
+                        ++i;
+                        ++failsafe;
+
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window))
+                    {
+
+                        text.setString("No way! I love anything related to C!");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+
+                    }
+
+                    if (button4.isBeingPushed(window))
+                    {
+                        text.setString("You like java??? Ewwwww......");
+                        ++i;
+                        ++failsafe;
+                    }
+                    
+
+                }
+
+                if ((girl.get_interest() >= 3) && continue_button.isBeingPushed(window) && i >= 36 && i < 45)
+                {
+                    ++i;
+                    text.setString(readFromFile(file));
+                }
+                if ((girl.get_interest() < 3) && continue_button.isBeingPushed(window) && i == 36)
+                {
+                    text.setString("As I thought, you're an idiot!. Have a nice life!");
+                }
+
 
             }
         }
