@@ -236,7 +236,8 @@ int main()
 
             // Run the game
             else {
-                
+                if (i ==  6) { resetBackgroundScale(window, sceneOneTexture, background); }
+               
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
                 if (i >= 8)
@@ -245,7 +246,7 @@ int main()
                 }
                 window.draw(rec_shape);
                 window.draw(text);
-                if (i == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
+               
 
 
                 if (continue_button.isBeingPushed(window) && i < 29)
@@ -418,6 +419,11 @@ int main()
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
                 }
+              
+
+
+
+
 
 
             }
