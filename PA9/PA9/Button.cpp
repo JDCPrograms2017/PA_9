@@ -21,6 +21,7 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 	window.draw(this->getDrawableShape());
 	window.draw(buttonText);
 
+
 	// create a rectangle shape to represent the local bounding box
 	if (debugMode) {
 		sf::FloatRect bounds(buttonText.getLocalBounds());

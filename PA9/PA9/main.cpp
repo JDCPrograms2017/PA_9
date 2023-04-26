@@ -123,35 +123,49 @@ int main()
 
 
     /* First button */
-    Button firstButton(sf::Vector2f(500, 100), sf::Vector2f(50, 150), "A data type that groups several related variables in one place");
-    firstButton.setOutlineThickness(2);
-    firstButton.setOutlineColor(sf::Color::Black);
-    firstButton.setFillColor(sf::Color::Blue);
-    firstButton.setButtonTextSize(17);
-    firstButton.setButtonTextFont(font);
-    firstButton.setButtonTextOrigin();
-    firstButton.setButtonTextPos(sf::Vector2f(300, 200));
+    Button button1(sf::Vector2f(500, 100), sf::Vector2f(50, 150), sf::Texture(), "A data type that groups several related variables in one place");
+    button1.setOutlineThickness(2);
+    button1.setOutlineColor(sf::Color::Black);
+    button1.setFillColor(sf::Color::Blue);
+    button1.setButtonTextSize(17);
+    button1.setButtonTextFont(font);
+    button1.setButtonTextOrigin();
+    button1.setButtonTextPos(sf::Vector2f(300, 200));
 
-    /* Second Button */
-    Button secondButton(sf::Vector2f(500, 100), sf::Vector2f(50, 250), "A dynamic data structure that holds multiple functions ");
-    secondButton.setOutlineThickness(2);
-    secondButton.setOutlineColor(sf::Color::Black);
-    secondButton.setFillColor(sf::Color::Blue);
-    secondButton.setButtonTextFont(font);
 
-    /* Third Button */
-    Button thirdButton(sf::Vector2f(500, 100), sf::Vector2f(50, 350), "A place to store data in the heap ");
-    thirdButton.setOutlineThickness(2);
-    thirdButton.setOutlineColor(sf::Color::Black);
-    thirdButton.setFillColor(sf::Color::Blue);
-    thirdButton.setButtonTextFont(font);
+    Button button2(sf::Vector2f(500, 100), sf::Vector2f(50, 250), sf::Texture(), "A dynamic data structure that holds multiple functions ");
+    button2.setOutlineThickness(2);
+    button2.setOutlineColor(sf::Color::Black);
+    button2.setFillColor(sf::Color::Blue);
+    button2.setButtonTextSize(17);
+    button2.setButtonTextFont(font);
+    button2.setButtonTextOrigin();
+    button2.setButtonTextPos(sf::Vector2f(300, 300));
 
-    /* Fourth Button */
-    Button fourthButton(sf::Vector2f(500, 100), sf::Vector2f(50, 350), "A place to store data in the heap ");
-    fourthButton.setOutlineThickness(2);
-    fourthButton.setOutlineColor(sf::Color::Black);
-    fourthButton.setFillColor(sf::Color::Blue);
-    fourthButton.setButtonTextFont(font);
+    Button button3(sf::Vector2f(500, 100), sf::Vector2f(50, 350), sf::Texture(), "A dynamic data structure that holds multiple functions ");
+    button3.setOutlineThickness(2);
+    button3.setOutlineColor(sf::Color::Black);
+    button3.setFillColor(sf::Color::Blue);
+    button3.setButtonTextSize(17);
+    button3.setButtonTextFont(font);
+    button3.setButtonTextOrigin();
+    button3.setButtonTextPos(sf::Vector2f(300, 400));
+
+    Button button4(sf::Vector2f(500, 100), sf::Vector2f(50, 450), sf::Texture(), "A dynamic data structure that holds multiple functions ");
+    button4.setOutlineThickness(2);
+    button4.setOutlineColor(sf::Color::Black);
+    button4.setFillColor(sf::Color::Blue);
+    button4.setButtonTextSize(17);
+    button4.setButtonTextFont(font);
+    button4.setButtonTextOrigin();
+    button4.setButtonTextPos(sf::Vector2f(300, 500));
+
+
+
+
+
+  
+
 
     bool isFullscreen = true;
     bool menuMode = true;
@@ -222,6 +236,7 @@ int main()
 
             // Run the game
             else {
+                
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
                 if (i >= 8)
@@ -230,11 +245,8 @@ int main()
                 }
                 window.draw(rec_shape);
                 window.draw(text);
-                if (i == 6)
-                {
-                    resetBackgroundScale(window, sceneOneTexture, background);
-
-                }
+                
+                if (i == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
 
 
                 if (continue_button.isBeingPushed(window) && i < 29)
@@ -248,29 +260,67 @@ int main()
                 {
                     window.draw(inputBox);
                     window.draw(inputText);
-                    firstButton.draw(window);
-                    secondButton.draw(window);
-                    thirdButton.draw(window);
-                    fourthButton.draw(window);
-                    girl.set_the_Position(sf::Vector2f(800, -100));
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
 
-                    if (firstButton.isBeingPushed(window)) {
-                        std::cout << "Correct Answer!" << std::endl;
+                    girl.set_the_Position(sf::Vector2f(800, -100));
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Good job! If you failed this one I would be concerned...");
                         ++i;
                         ++failsafe;
+                        
                     }
-                    /*if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
+                        ++failsafe;
+                        ++i;
+                    }
+                }
+                if (i == 30 && continue_button.isBeingPushed(window)) { i++; }
+
+                if (i == 31 && failsafe == 1)
+                {
+                    text.setString("If you can't answer this one, you're an idiot!");
+                    inputText.setString("What is a private member of a class?");
+                    button1.setButtonText("A variable or function that cannot be accessed from the outside of a class");
+                    button2.setButtonText("Idk");
+                    button3.setButtonText("A member that can only be accessed using a friend function");
+                    button4.setButtonText("A member of a class that is protected");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
                         sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
-                        if (button1.getGlobalBounds().contains(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y)))
+                        if (button1.isBeingPushed(window))
                         {
-                            std::cout << "Correct Answer!" << std::endl;
+                            text.setString("Nice! People who are smart are hot ;)");
                             ++i;
                             ++failsafe;
+
                         }
 
-                    }*/
+                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                        {
+                            std::cout << "Wrong Answer!" << std::endl;
+                            text.setString("Wrong! You're getting uglier the more you get things wrong...");
+                            ++i;
+                            ++failsafe;
+                    
+                        }
+
+                    }
                 }
 
                 
