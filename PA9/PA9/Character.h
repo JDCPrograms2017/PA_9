@@ -23,6 +23,7 @@ public:
 		return dynamic_cast<sf::Sprite&>(*this);
 	}
 	
+	// setters written by Simon
 	void set_interest(int x)
 	{
 		interestLevel = x;
