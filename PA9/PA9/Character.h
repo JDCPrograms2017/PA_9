@@ -13,11 +13,23 @@ public:
 		numQuestionsIncorrect = 0;
 		correctToIncorrectRatio = 0.0;
 	}
+	
+	void set_the_Position(const sf::Vector2f position)
+	{
+		this->setPosition(position);
+	}
 
 	sf::Sprite& getDrawableObject() {
 		return dynamic_cast<sf::Sprite&>(*this);
 	}
-
+	
+	void set_interest(int x)
+	{
+		interestLevel = x;
+	}
+	int get_interest() {
+		return interestLevel;
+	}
 private:
 	int interestLevel;
 	int numQuestionsCorrect;
