@@ -28,6 +28,8 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
+
+    int gameWon = 0;
     // music
     sf::Music music;
     if (!music.openFromFile("music/dating_theme.ogg"))
@@ -82,6 +84,20 @@ int main()
     cafeLoseBackground.loadFromFile("Textures/cafeLose.png");
     pandaLoseBackground.loadFromFile("Textures/pandaLose.png");
     resetBackgroundScale(window, menuBackgroundTexture, background); 
+
+
+
+    /* Panda Scene by Zack */
+    sf::Texture gamePandaExterior;
+    gamePandaExterior.loadFromFile("Textures/fancyPanda.jpeg");
+
+
+    sf::Texture gamePandaInterior;
+    gamePandaInterior.loadFromFile("Textures/pandaInterior.jpg");
+
+
+    sf::Texture cars;
+    cars.loadFromFile("Textures/cars_bedroom.jpeg");
 
     // This is the texture and mapping for the text box for when she speaks
     sf::RectangleShape rec_shape;
@@ -465,6 +481,137 @@ int main()
                     resetBackgroundScale(window, cafeLoseBackground, background);
                 }
                 
+                /* Zacks Game Code Starts Here */
+
+               
+                if (i == 45)
+                {
+                    resetBackgroundScale(window, gamePandaExterior, background);
+
+                    /*---- Zoom Effect ------------------------------------------------*/
+
+                    sf::View view(sf::FloatRect(0.f, 0.f, 1440.f, 810.f));
+                    window.setView(view);
+                    // Create target view with smaller rectangle size
+                    sf::View targetView(sf::FloatRect(100.f, 100.f, 500.f, 500.f));
+
+                    // Set zoom factor and calculate step size
+                    float zoomFactor = targetView.getSize().x / view.getSize().x;
+                    float stepSize = (zoomFactor - 1.f) / 5.f;
+
+                    // Perform zoom over 1.5 seconds
+                    sf::Clock zoomClock;
+                    while (zoomClock.getElapsedTime().asSeconds() < 1.5) {
+                        // Calculate current zoom level
+                        float currentZoom = 1.f + (stepSize * zoomClock.getElapsedTime().asSeconds());
+
+                        // Create new view with current zoom level
+                        sf::View zoomView(view.getCenter(), view.getSize() * currentZoom);
+                        window.setView(zoomView);
+
+                        // Draw scene
+                        window.clear();
+                        window.draw(background);
+                        window.display();
+
+
+
+                    }
+
+                    // Switch back to original view
+                    window.setView(view);
+
+                    /*------------------------------------------------------------*/
+
+                    resetBackgroundScale(window, gamePandaInterior, background);
+                   
+                    ++i;
+                    std::cout << i;
+
+                    text.setString(readFromFile(file));
+                   
+                }
+                
+                if ( i >= 46 && i < 50 && continue_button.isBeingPushed(window))
+                {
+                    
+                   
+                    ++i;
+                    std::cout << i;
+                    text.setString(readFromFile(file));
+                }
+
+               
+                if (i >= 50 && i < 51 )
+                {
+                   
+                    text.setString("Can you holy c my temple!");
+                    inputText.setString("What is equivalent of main in Holy c?");
+                    button1.setButtonText("holy()");
+                    button2.setButtonText("praise_the_lord()");
+                    button3.setButtonText("start()");
+                    button4.setButtonText("andrewOFallon()");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Really... that would be too easy, you're going to be frying in that orange chicken bowl");
+                        ++i;
+                        ++failsafe;
+                        gameWon = 3;
+                    }
+
+                    if (button2.isBeingPushed(window))
+                    {
+
+                        text.setString("Hello New Boyfriend, I wanna take you home and pull from your repository ");
+                        ++i;
+                        ++failsafe;
+                        gameWon = 1;
+
+                    }
+
+
+                    if (button3.isBeingPushed(window))
+                    {
+
+                        text.setString("Ewww, you're not starting my main program, knife knife ");
+                        ++i;
+                        ++failsafe;
+                        gameWon = 3;
+
+                    }
+
+                    if (button4.isBeingPushed(window))
+                    {
+                        text.setString("Ah yes the best comp sci proffesor");
+                        ++i;
+                        gameWon = 1;
+                    }
+                }
+
+                if (gameWon == 1)
+                {
+                    resetBackgroundScale(window, cars, background);
+                    std::cout << "Damm ya won";
+                }
+                
+                if (gameWon == 3)
+                {
+                   
+                   
+                    resetBackgroundScale(window, pandaLoseBackground, background);
+
+                }
+
+
+
 
             }
         }
