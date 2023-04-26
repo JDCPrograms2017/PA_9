@@ -20,17 +20,12 @@
 #include <fstream>
 #include <string>
 
-
-
-
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite& backgroundRef);
 sf::Vector2f& recalculateEntityPosition(Character& characterRef, sf::Window& windowRef);
 std::string readFromFile(std::ifstream& file);
 
 int main()
 {
-    int ticker = 0;
-
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
     // music
@@ -54,8 +49,8 @@ int main()
     text.setFillColor(sf::Color::White);
     text.setStyle(sf::Text::Regular);
     text.setString("\"One lonely night, you get a match on Tinder and suprisingly, the girl texts first.\"");
-    text.setPosition(230, 650);
-
+    text.setPosition(180, 650);
+    
 
     // This is the texture and mapping for the background
     // Background
@@ -63,26 +58,17 @@ int main()
     sf::Sprite sceneOneBackground;
     sf::Texture sceneOneTexture;
     sf::Texture gameBackgroundTexture;
-    sf::Texture gameFancyPanda;
-    sf::Texture gamePandaInterior;
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
     sf::Texture empty_texture;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
-
-    /* Game Textures by Level */
     gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
-    gameFancyPanda.loadFromFile("Textures/fancyPanda.jpeg");
-    gamePandaInterior.loadFromFile("Textures/pandaInterior.jpg");
-
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
     sceneOneTexture.loadFromFile("Textures/cafe.jpg");
-    resetBackgroundScale(window, menuBackgroundTexture, background);
-
-
+    resetBackgroundScale(window, menuBackgroundTexture, background); 
 
     // This is the texture and mapping for the text box for when she speaks
     sf::RectangleShape rec_shape;
@@ -122,7 +108,7 @@ int main()
     //Text Position: (653, 655)
 
     // use this to click thru text
-    Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), "");
+    Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
 
     // input question
     sf::RectangleShape inputBox(sf::Vector2f(300, 80));
@@ -174,19 +160,25 @@ int main()
     button4.setButtonTextOrigin();
     button4.setButtonTextPos(sf::Vector2f(300, 500));
 
+
+
+
+
+  
+
+
     bool isFullscreen = true;
     bool menuMode = true;
     bool aboutMode = false;
 
     music.play();
     std::ifstream file("lines.txt");
-    int  failsafe = 0;
-    int zackTicker = 0;
+    int i = 0, failsafe = 0, win_condition = 0;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
         sf::Event event;
-
+ 
         while (window.pollEvent(event))
         {
             window.clear();
@@ -228,7 +220,6 @@ int main()
                 if (exitBtn.isBeingPushed(window)) {
                     window.close();
                 }
-
             }
             else if (aboutMode) {
                 exitBtn.draw(window);
@@ -245,28 +236,26 @@ int main()
 
             // Run the game
             else {
-
+                
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
-                std::cout << ticker;
-                if (ticker == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
-
-                if (32 > ticker >= 8)
+                if (i >= 8)
                 {
                     window.draw(girl.getDrawableObject());
                 }
                 window.draw(rec_shape);
                 window.draw(text);
+                if (i == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
 
 
-                if (continue_button.isBeingPushed(window) && ticker < 29)
+                if (continue_button.isBeingPushed(window) && i < 29)
                 {
-                    ++ticker;
+                    ++i;
                     text.setString(readFromFile(file));
 
                 }
-
-                if (ticker == 29 && failsafe == 0)
+                
+                if (i == 29 && failsafe == 0)
                 {
                     window.draw(inputBox);
                     window.draw(inputText);
@@ -276,29 +265,36 @@ int main()
                     button4.draw(window);
 
                     girl.set_the_Position(sf::Vector2f(800, -100));
-                    if (button1.isBeingPushed(window))
-                    {
-                        text.setString("Good job! If you failed this one I would be concerned...");
-                        ++ticker;
-                        ++failsafe;
 
-                    }
-
-                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
-                        std::cout << "Wrong Answer!" << std::endl;
-                        text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
-                        ++failsafe;
-                        ++ticker;
+                        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+                        if (button1.isBeingPushed(window))
+                        {
+                            text.setString("Good job! If you failed this one I would be concerned...");
+                            ++i;
+                            ++failsafe;
+                            girl.set_interest(win_condition++);
+                        }
+
+                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                        {
+                            std::cout << "Wrong Answer!" << std::endl;
+                            text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
+                            ++failsafe;
+                            ++i;
+                        }
+                      
                     }
                 }
-                if (ticker == 30 && continue_button.isBeingPushed(window)) { ticker++; }
+                if (i == 30 && continue_button.isBeingPushed(window)) { i++; }
 
-                if (ticker == 31 && failsafe == 1)
+                if (i == 31 && failsafe == 1)
                 {
                     text.setString("If you can't answer this one, you're an idiot!");
                     inputText.setString("What is a private member of a class?");
-                    button1.setButtonText("A variable or function that cannot be accessed from the outside of a class");
+                    button1.setButtonText("A variable or function that cannot be accessed \nfrom the outside of a class");
                     button2.setButtonText("Idk");
                     button3.setButtonText("A member that can only be accessed using a friend function");
                     button4.setButtonText("A member of a class that is protected");
@@ -309,123 +305,129 @@ int main()
                     button3.draw(window);
                     button4.draw(window);
 
-                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    if (button1.isBeingPushed(window))
                     {
-                        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                        text.setString("Nice! People who are smart are hot ;)");
+                        ++i;
+                        ++failsafe;
+                        win_condition++;
+                        girl.set_interest(win_condition++);
+                    
+                    }
+                    
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Wrong! You're getting uglier the more you get things wrong...");
+                        ++i;
+                        ++failsafe;
+                    
+                    }
 
-                        if (button1.isBeingPushed(window))
-                        {
-                            text.setString("Nice! People who are smart are hot ;)");
-                            ++ticker;
-                            ++failsafe;
+                    
+                }
 
-                        }
+                if (i == 32 && continue_button.isBeingPushed(window)) { i++; }
 
-                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
-                        {
-                            std::cout << "Wrong Answer!" << std::endl;
-                            text.setString("Wrong! You're getting uglier the more you get things wrong...");
-                            ++ticker;
-                            ++failsafe;
+                if (i == 33 && failsafe == 2)
+                {
+                    text.setString("Let's make things a little more challenging!");
+                    inputText.setString("Give the big O notation \nfor bubble sort!");
+                    button1.setButtonText("O(n^2)");
+                    button2.setButtonText("O(n)");
+                    button3.setButtonText("O(logn)");
+                    button4.setButtonText("O(logn * n");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
 
-                        }
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Your good at this hehe");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Basic knowledge, do you actually know how to code?");
+                        ++i;
+                        ++failsafe;
 
                     }
 
+                }
+                if (i == 34 && continue_button.isBeingPushed(window)) { i++; }
 
+                if (i == 35 && failsafe == 3)
+                {
+                    text.setString("One more and we're done!");
+                    inputText.setString("What's your favorite coding language?");
+                    button1.setButtonText("Python");
+                    button2.setButtonText("C");
+                    button3.setButtonText("C++");
+                    button4.setButtonText("Java");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Ew, too basic for my tastes...");
+                        ++i;
+                        ++failsafe;
+
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window))
+                    {
+
+                        text.setString("No way! I love anything related to C!");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+
+                    }
+
+                    if (button4.isBeingPushed(window))
+                    {
+                        text.setString("You like java??? Ewwwww......");
+                        ++i;
+                        ++failsafe;
+                    }
+                    
 
                 }
 
-/* Okay this is zacks bandade solution to online workflow, two diff creators approaches */
-               
-
-                    if (zackTicker >= 32)
-                    {
-                        window.draw(girl.getDrawableObject());
-         
-                    }
-
-               
-
-                    
-              
-                    if (32 <= zackTicker < 38)
-                    {
-                        text.setString(readFromFile(file));
-                    }
-                    
-                    
-
-                    if (zackTicker == 38)
-                    {
-                        /* Transition to the stor vroom vroom */
-                        resetBackgroundScale(window, gameFancyPanda, background);
-                        text.setString(readFromFile(file));
-                        
-
-
-
-                    }
-                    if (zackTicker == 42)
-                    {
-                        /*---- Zoom Effect ------------------------------------------------*/
-
-                        sf::View view(sf::FloatRect(0.f, 0.f, 1440.f, 810.f));
-                        window.setView(view);
-                        // Create target view with smaller rectangle size
-                        sf::View targetView(sf::FloatRect(100.f, 100.f, 500.f, 500.f));
-
-                        // Set zoom factor and calculate step size
-                        float zoomFactor = targetView.getSize().x / view.getSize().x;
-                        float stepSize = (zoomFactor - 1.f) / 5.f;
-
-                        // Perform zoom over 1.5 seconds
-                        sf::Clock zoomClock;
-                        while (zoomClock.getElapsedTime().asSeconds() < 1.5) {
-                            // Calculate current zoom level
-                            float currentZoom = 1.f + (stepSize * zoomClock.getElapsedTime().asSeconds());
-
-                            // Create new view with current zoom level
-                            sf::View zoomView(view.getCenter(), view.getSize() * currentZoom);
-                            window.setView(zoomView);
-
-                            // Draw scene
-                            window.clear();
-                            window.draw(background);
-
-
-
-
-                        }
-
-                        // Switch back to original view
-                        //window.setView(view);
-
-                        ///*------------------------------------------------------------*/
-
-
-                        ///* Transition to the stor vroom vroom */
-
-                        //resetBackgroundScale(window, gamePandaInterior, background);
-
-                       
-                        
-
-                    }
-
-
-
+                if ((girl.get_interest() >= 3) && continue_button.isBeingPushed(window) && i >= 36 && i < 45)
+                {
+                    ++i;
+                    text.setString(readFromFile(file));
                 }
+                if ((girl.get_interest() < 3) && continue_button.isBeingPushed(window) && i == 36)
+                {
+                    text.setString("As I thought, you're an idiot!. Have a nice life!");
+                }
+
+
             }
-
-            window.display();
         }
+
+        window.display();
     }
 
     return 0;
 }
-
-
 
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite &backgroundRef) {
     sf::Vector2u windowSize = windowRef.getSize(), textureSize = backgroundTextureRef.getSize();
@@ -452,8 +454,3 @@ std::string readFromFile(std::ifstream& file)
 
 
 }
-
-
-
-
-
