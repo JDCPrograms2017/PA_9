@@ -259,7 +259,7 @@ int main()
                
 
 
-                if (continue_button.isBeingPushed(window) && i < 29)
+                if (i < 29 && continue_button.isBeingPushed(window)  )
                 {
                     ++i;
                     text.setString(readFromFile(file));
