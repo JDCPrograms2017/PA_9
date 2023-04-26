@@ -43,6 +43,12 @@ int main()
         throw("Music no load!");
     }
 
+    sf::Music scene2_music;
+    if (!scene2_music.openFromFile("music/panda.ogg"))
+    {
+        throw("Music no load!");
+    }
+
     // Text generation
     sf::Font font;
     if (!font.loadFromFile("Font/Aller_It.ttf"))
@@ -111,9 +117,15 @@ int main()
     // andy's dream girl, added polymorphism
     sf::Texture girl_asset;
     girl_asset.loadFromFile("Textures/andy_girl3.png");
+    sf::Texture girl2_asset;
+    girl2_asset.loadFromFile("Textures/menu_imh.png");
+
     Character girl(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(500, -100));
 
-    Character girl2(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(100, -50));
+    Character girl2(girl2_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(100, -50));
+
+
+
 
 
     // menu buttons
@@ -471,6 +483,7 @@ int main()
                 
                 if (i >= 36 && i < 45 && (girl.get_interest() >= 3) && continue_button.isBeingPushed(window))
                 {
+                    scene1_music.stop();
                     ++i;
                     text.setString(readFromFile(file));
                 }
@@ -532,10 +545,13 @@ int main()
                    
                 }
                 
+                if (i == 46)
+                {
+                    scene2_music.play();
+                }
                 if ( i >= 46 && i < 50 && continue_button.isBeingPushed(window))
                 {
                     
-                   
                     ++i;
                     std::cout << i;
                     text.setString(readFromFile(file));
