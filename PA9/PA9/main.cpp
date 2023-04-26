@@ -97,6 +97,8 @@ int main()
     girl_asset.loadFromFile("Textures/andy_girl3.png");
     Character girl(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(500, -100));
 
+    Character girl2(girl_asset, sf::Vector2f(0.5, 0.5), sf::Vector2f(100, -50));
+
 
     // menu buttons
     sf::Texture btnTexture;
@@ -199,11 +201,16 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
+            if (exitBtn.isBeingPushed(window)) {
+                window.close();
+            }
+
             // Display all of the menu features
             if (menuMode) {
                 aboutGameBtn.draw(window);
                 exitBtn.draw(window);
                 playGameBtn.draw(window);
+                window.draw(girl2);
                 if (event.type == sf::Event::Resized) {
                     isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
                     if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
@@ -232,10 +239,6 @@ int main()
                     aboutMode = true;
                     menuMode = false;
                 }
-
-                if (exitBtn.isBeingPushed(window)) {
-                    window.close();
-                }
             }
             else if (aboutMode) {
                 
@@ -253,10 +256,6 @@ int main()
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
-                }
-
-                if (exitBtn.isBeingPushed(window)) {
-                    window.close();
                 }
             }
             
@@ -278,7 +277,7 @@ int main()
 
                 window.draw(rec_shape);
                 window.draw(text);
-
+                exitBtn.draw(window);
                 if (i == 6) {
                     resetBackgroundScale(window, sceneOneTexture, background);
                     if (event.type == sf::Event::Resized) {
@@ -294,6 +293,8 @@ int main()
 
                         isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
                     }
+                    exitBtn.draw(window);
+
                 }
 
                 if (i < 29 && continue_button.isBeingPushed(window)  )
@@ -450,8 +451,6 @@ int main()
                         ++i;
                         ++failsafe;
                     }
-                    
-
                 }
                 
                 if (i >= 36 && i < 45 && (girl.get_interest() >= 3) && continue_button.isBeingPushed(window))
@@ -464,7 +463,6 @@ int main()
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
                     resetBackgroundScale(window, cafeLoseBackground, background);
-
                 }
                 
 
