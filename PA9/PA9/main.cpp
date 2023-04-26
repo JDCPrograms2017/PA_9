@@ -17,6 +17,7 @@
 #include <iostream>
 #include "Character.h"
 #include "Button.hpp"
+#include "TestCases.h"
 #include <fstream>
 #include <string>
 
@@ -26,35 +27,30 @@ std::string readFromFile(std::ifstream& file);
 
 int main()
 {
+    TestCases tester;
+    tester.testResourceLoading();
+    tester.testButtonClick();
+    tester.testTextRecomputation();
+    tester.testOpeningTextFile(); // this test function will call the subsequent file-related test function.
+
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
 
     int gameWon = 0;
     // music
     sf::Music music;
-    if (!music.openFromFile("music/dating_theme.ogg"))
-    {
-        throw("Music no load!");
-    }
+    music.openFromFile("music/dating_theme.ogg");
 
     sf::Music scene1_music;
-    if (!scene1_music.openFromFile("music/scene1.ogg"))
-    {
-        throw("Music no load!");
-    }
+    scene1_music.openFromFile("music/scene1.ogg");
 
     sf::Music scene2_music;
-    if (!scene2_music.openFromFile("music/panda.ogg"))
-    {
-        throw("Music no load!");
-    }
+    scene2_music.openFromFile("music/panda.ogg");
 
     // Text generation
     sf::Font font;
-    if (!font.loadFromFile("Font/Aller_It.ttf"))
-    {
-        throw("Sadness :(");
-    }
+    font.loadFromFile("Font/Aller_It.ttf");
+ 
     // text generated on screen
     sf::Text text;
     text.setFont(font);
@@ -216,7 +212,7 @@ int main()
     std::ifstream file("lines.txt");
     int i = 0, failsafe = 0, win_condition = 0;
     bool Current_State = true;
-    while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
+    while (window.isOpen())
     {
 
         sf::Event event;
@@ -290,9 +286,7 @@ int main()
             // Run the game
             else {
                 if (i ==  6) { resetBackgroundScale(window, sceneOneTexture, background); }
-               
-                //window.draw(girl.getDrawableObject());
-                /*    continue_button.draw(window);*/
+           
                 if (i == 7)
                 {
                     scene1_music.play();

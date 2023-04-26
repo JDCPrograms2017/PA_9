@@ -17,7 +17,7 @@ public:
 		std::cout << "New button created!\n";
 		this->setPosition(position);
 
-		if (insideText != "No text") buttonText.setString(insideText), std::cout << "Set string text!";
+		if (insideText != "No text") buttonText.setString(insideText);
 		buttonText.setStyle(sf::Text::Bold);
 	};
 
@@ -30,7 +30,7 @@ public:
 		buttonText.setFillColor(sf::Color::White);
 		this->setPosition(position);
 
-		if (insideText != "No text") buttonText.setString(insideText), std::cout << "Set string text!";
+		if (insideText != "No text") buttonText.setString(insideText);
 		buttonText.setStyle(sf::Text::Bold);
 	};
 
@@ -79,6 +79,9 @@ public:
 	bool getButtonState();
 	bool isBeingPushed(const sf::Window& windowRef);
 	sf::RectangleShape& getDrawableShape();
+	sf::Text& getTextObject() {
+		return buttonText;
+	}
 private:
 	sf::Vector2f position;
 	const sf::Texture buttonTexture;
