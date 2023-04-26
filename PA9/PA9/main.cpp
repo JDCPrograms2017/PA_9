@@ -416,24 +416,20 @@ int main()
                     
 
                 }
-
-                if ((girl.get_interest() >= 3) && continue_button.isBeingPushed(window) && i >= 36 && i < 45)
+                
+                if (i >= 36 && i < 45 && (girl.get_interest() >= 3) && continue_button.isBeingPushed(window))
                 {
                     ++i;
                     text.setString(readFromFile(file));
                 }
-                if ((girl.get_interest() < 3) && continue_button.isBeingPushed(window) && i == 36)
+
+                if (i == 36 && (girl.get_interest() < 3) && continue_button.isBeingPushed(window))
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
                     resetBackgroundScale(window, cafeLoseBackground, background);
 
                 }
-              
-
-
-
-
-
+                
 
             }
         }
