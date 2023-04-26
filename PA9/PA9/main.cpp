@@ -31,7 +31,7 @@ int main()
     tester.testResourceLoading();
     tester.testButtonClick();
     tester.testTextRecomputation();
-    tester.testOpeningTextFile(); // this test function will call the subsequent file-related test function.
+    tester.testOpeningTextFile(); // this test function will call the subsequent file-related test function...
 
     sf::RenderWindow window(sf::VideoMode(1440, 810), "Code to My Heart"); // 0.75 scale factor of the menu image size
 
