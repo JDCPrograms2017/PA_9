@@ -62,12 +62,16 @@ int main()
     sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
     sf::Texture empty_texture;
+    sf::Texture cafeLoseBackground;
+    sf::Texture pandaLoseBackground;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
     sceneOneTexture.loadFromFile("Textures/cafe.jpg");
+    cafeLoseBackground.loadFromFile("Textures/cafeLose.png");
+    pandaLoseBackground.loadFromFile("Textures/pandaLose.png");
     resetBackgroundScale(window, menuBackgroundTexture, background); 
 
     // This is the texture and mapping for the text box for when she speaks
@@ -90,22 +94,27 @@ int main()
     btnTexture.loadFromFile("Textures/pink-button.png");
     Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
     playGameBtn.setButtonTextFont(font);
-    //Text position: (823, 505)
 
     Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture, "About Game");
     aboutGameBtn.setButtonTextFont(font);
-    //Text Postition: (820, 580)
 
     sf::Texture exitBtnTexture;
     exitBtnTexture.loadFromFile("Textures/exit.png");
     Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture, "Exit");
     exitBtn.setButtonTextFont(font);
-    //Text Position: (1320, 730)
 
     // about screen - exit button stays the same, changing position of play game button
     Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture, "Play Game");
     newPlayGameBtn.setButtonTextFont(font);
-    //Text Position: (653, 655)
+    // about screen text
+    sf::Text aboutText;
+    aboutText.setFont(font);
+    aboutText.setCharacterSize(30);
+    aboutText.setFillColor(sf::Color::White);
+    aboutText.setStyle(sf::Text::Regular);
+    aboutText.setString("\"Code to My Heart\" is an exciting dating simulator that puts your \ncomputer science knowledge to the test. In this game, you take \non the role of a protagonist who's trying to win the heart of the \nlove interest, Clara, by answering challenging questions related \nto programming, computer science, and technology. As you progress \nthrough the game, you'll face increasingly difficult questions that \nwill test your knowledge and skills.");
+    aboutText.setPosition(260, 250);
+
 
     // use this to click thru text
     Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
@@ -224,6 +233,7 @@ int main()
             else if (aboutMode) {
                 exitBtn.draw(window);
                 newPlayGameBtn.draw(window);
+                window.draw(aboutText);
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
@@ -322,7 +332,6 @@ int main()
                         text.setString("Wrong! You're getting uglier the more you get things wrong...");
                         ++i;
                         ++failsafe;
-                    
                     }
 
                     
@@ -360,7 +369,6 @@ int main()
                         text.setString("Basic knowledge, do you actually know how to code?");
                         ++i;
                         ++failsafe;
-
                     }
 
                 }
@@ -387,7 +395,6 @@ int main()
                         text.setString("Ew, too basic for my tastes...");
                         ++i;
                         ++failsafe;
-
                     }
 
                     if (button2.isBeingPushed(window) || button3.isBeingPushed(window))
@@ -418,6 +425,8 @@ int main()
                 if ((girl.get_interest() < 3) && continue_button.isBeingPushed(window) && i == 36)
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
+                    resetBackgroundScale(window, cafeLoseBackground, background);
+
                 }
               
 
