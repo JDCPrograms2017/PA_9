@@ -232,13 +232,6 @@ int main()
             }
             else if (aboutMode) {
                 
-                if (event.type == sf::Event::Resized) {
-                    isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
-                    if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
-                    if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
-                    resetBackgroundScale(window, aboutBackgroundTexture, aboutBackground);
-                }
-
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
                     if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
                     if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
