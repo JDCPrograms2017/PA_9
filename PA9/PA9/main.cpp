@@ -66,17 +66,22 @@ int main()
     sf::Sprite background;
     sf::Sprite sceneOneBackground;
     sf::Texture sceneOneTexture;
+    sf::Vector2f backgroundResizeValue;
+    sf::Texture empty_texture;
+    sf::Texture gameBackgroundTexture;
+
+    // Haley designed these
     sf::Sprite aboutBackground;
     sf::Sprite menuBackground;
     sf::Sprite cafeLose;
     sf::Sprite pandaLose;
-    sf::Texture gameBackgroundTexture;
     sf::Texture menuBackgroundTexture;
     sf::Texture aboutBackgroundTexture;
-    sf::Vector2f backgroundResizeValue;
-    sf::Texture empty_texture;
     sf::Texture cafeLoseBackground;
     sf::Texture pandaLoseBackground;
+
+    
+    
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
     background.setPosition(0, 0);
@@ -124,7 +129,7 @@ int main()
 
 
 
-    // menu buttons
+    // Haley implemented the menu buttons
     sf::Texture btnTexture;
     btnTexture.loadFromFile("Textures/pink-button.png");
     Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
@@ -138,10 +143,10 @@ int main()
     Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture, "Exit");
     exitBtn.setButtonTextFont(font);
 
-    // about screen - exit button stays the same, changing position of play game button
+    // Haley designed and implemented the about screen - exit button stays the same, changing position of play game button
     Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture, "Play Game");
     newPlayGameBtn.setButtonTextFont(font);
-    // about screen text
+    // Haley wrote the summary of the game
     sf::Text aboutText;
     aboutText.setFont(font);
     aboutText.setCharacterSize(30);
@@ -154,7 +159,8 @@ int main()
     // use this to click thru text
     Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
 
-    // input question
+
+    // input question, improved my Simon and Josh originally was created by Zack
     sf::RectangleShape inputBox(sf::Vector2f(300, 80));
     inputBox.setPosition(50, 50);
     inputBox.setOutlineThickness(2);
@@ -164,6 +170,8 @@ int main()
     sf::Text inputText("What is a struct?", font, 20);
     inputText.setPosition(60, 60);
     inputText.setFillColor(sf::Color::Black);
+
+    /* Originally done in my Panda Level on my Branch utilzied the 4 buttons crrated, Josh and Simon modified to use Joshs button class */
 
 
     /* First button */
@@ -209,7 +217,10 @@ int main()
     bool aboutMode = false;
 
     music.play();
+
+    /* Simon wrote first half of dialogue, Zack wrote latter */
     std::ifstream file("lines.txt");
+
     int i = 0, failsafe = 0, win_condition = 0;
     bool Current_State = true;
     while (window.isOpen())
@@ -225,16 +236,19 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
+            // Haley implemented the exit button
             if (exitBtn.isBeingPushed(window)) {
                 window.close();
             }
 
-            // Display all of the menu features
+            // Display all of the menu features - Haley implemented this
             if (menuMode) {
                 aboutGameBtn.draw(window);
                 exitBtn.draw(window);
                 playGameBtn.draw(window);
                 window.draw(girl2);
+
+                // someone else did this - Haley debugged it
                 if (event.type == sf::Event::Resized) {
                     isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
                     if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
@@ -252,12 +266,14 @@ int main()
                     isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
                 }
 
+               
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     music.pause();
                     menuMode = false;
                 }
 
+                // Haley implemented moving to the about screen
                 if (aboutGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, aboutBackgroundTexture, background);
                     aboutMode = true;
@@ -266,6 +282,7 @@ int main()
             }
             else if (aboutMode) {
                 
+                // someone else did this
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) {
                     if (isFullscreen) window.create(sf::VideoMode(1050, 789), "Code to my Heart");
                     if (!isFullscreen) window.create(sf::VideoMode::getFullscreenModes()[0], "Code to my Heart");
@@ -273,6 +290,7 @@ int main()
                     isFullscreen = !isFullscreen; // It'll alternate each time we go back and forth between fullscreen and not fullscreen
                 }
 
+                // Haley implemented the about screen features
                 exitBtn.draw(window);
                 newPlayGameBtn.draw(window);
                 window.draw(aboutText);
@@ -326,6 +344,9 @@ int main()
 
                 }
                 
+                /* Zack: Originally Created on my Branch, coded the question prompt code   */
+                /* The mouse pos code and the drawing of the buttons                      */
+
                 if (i == 29 && failsafe == 0)
                 {
                     window.draw(inputBox);
@@ -485,15 +506,18 @@ int main()
                 if (i == 36 && (girl.get_interest() < 3) && continue_button.isBeingPushed(window))
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
+                    // Haley designed and implemented the cafe losing screen
                     resetBackgroundScale(window, cafeLoseBackground, background);
                 }
                 
-                /* Zacks Game Code Starts Here */
-
+                /* Zack: Panda Level, I worked on this originally on my branch and looked little different, Simon and I differed on how our games progressed */
+                /* Cause mine progressed in a way that conflicted with Simons, I decided to code and abrige my Panda level                                  */
                
                 if (i == 45)
                 {
                     resetBackgroundScale(window, gamePandaExterior, background);
+
+                /* Zack really proud of this Zooming effect that pans into the panda store think its cool                                               */
 
                     /*---- Zoom Effect ------------------------------------------------*/
 
@@ -605,6 +629,8 @@ int main()
                         gameWon = 1;
                     }
                 }
+
+                /* Zack: Wish this was better but last night came up with easy system to change the window based on who wins */
 
                 if (gameWon == 1)
                 {
