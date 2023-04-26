@@ -35,6 +35,11 @@ int main()
         throw("Music no load!");
     }
 
+    sf::Music scene1_music;
+    if (!scene1_music.openFromFile("music/scene1.ogg"))
+    {
+        throw("Music no load!");
+    }
 
     // Text generation
     sf::Font font;
@@ -180,6 +185,7 @@ int main()
     music.play();
     std::ifstream file("lines.txt");
     int i = 0, failsafe = 0, win_condition = 0;
+    bool Current_State = true;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -217,6 +223,7 @@ int main()
 
                 if (playGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
+                    music.pause();
                     menuMode = false;
                 }
 
@@ -252,17 +259,23 @@ int main()
                     window.close();
                 }
             }
-
+            
             // Run the game
             else {
                 if (i ==  6) { resetBackgroundScale(window, sceneOneTexture, background); }
                
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
+                if (i == 7)
+                {
+                    scene1_music.play();
+                }
                 if (i >= 8)
                 {
                     window.draw(girl.getDrawableObject());
+                    
                 }
+
                 window.draw(rec_shape);
                 window.draw(text);
 
