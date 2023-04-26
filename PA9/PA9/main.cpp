@@ -62,12 +62,16 @@ int main()
     sf::Texture aboutBackgroundTexture;
     sf::Vector2f backgroundResizeValue;
     sf::Texture empty_texture;
+    sf::Texture cafeLoseBackground;
+    sf::Texture pandaLoseBackground;
     menuBackgroundTexture.loadFromFile("Textures/menu.png");
     gameBackgroundTexture.loadFromFile("Textures/intro.jpg");
     background.setPosition(0, 0);
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
     sceneOneTexture.loadFromFile("Textures/cafe.jpg");
+    cafeLoseBackground.loadFromFile("Textures/cafeLose.png");
+    pandaLoseBackground.loadFromFile("Textures/pandaLose.png");
     resetBackgroundScale(window, menuBackgroundTexture, background); 
 
     // This is the texture and mapping for the text box for when she speaks
@@ -90,25 +94,30 @@ int main()
     btnTexture.loadFromFile("Textures/pink-button.png");
     Button playGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 450), btnTexture, "Play Game");
     playGameBtn.setButtonTextFont(font);
-    //Text position: (823, 505)
 
     Button aboutGameBtn(sf::Vector2f(300, 150), sf::Vector2f(750, 525), btnTexture, "About Game");
     aboutGameBtn.setButtonTextFont(font);
-    //Text Postition: (820, 580)
 
     sf::Texture exitBtnTexture;
     exitBtnTexture.loadFromFile("Textures/exit.png");
     Button exitBtn(sf::Vector2f(200, 100), sf::Vector2f(1250, 700), exitBtnTexture, "Exit");
     exitBtn.setButtonTextFont(font);
-    //Text Position: (1320, 730)
 
     // about screen - exit button stays the same, changing position of play game button
     Button newPlayGameBtn(sf::Vector2f(300, 150), sf::Vector2f(580, 600), btnTexture, "Play Game");
     newPlayGameBtn.setButtonTextFont(font);
-    //Text Position: (653, 655)
+    // about screen text
+    sf::Text aboutText;
+    aboutText.setFont(font);
+    aboutText.setCharacterSize(30);
+    aboutText.setFillColor(sf::Color::White);
+    aboutText.setStyle(sf::Text::Regular);
+    aboutText.setString("\"Code to My Heart\" is an exciting dating simulator that puts your \ncomputer science knowledge to the test. In this game, you take \non the role of a protagonist who's trying to win the heart of the \nlove interest, Clara, by answering challenging questions related \nto programming, computer science, and technology. As you progress \nthrough the game, you'll face increasingly difficult questions that \nwill test your knowledge and skills.");
+    aboutText.setPosition(260, 250);
+
 
     // use this to click thru text
-    Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), "");
+    Button continue_button(sf::Vector2f(1400, 569), sf::Vector2f(-20, 350), empty_texture, "");
 
     // input question
     sf::RectangleShape inputBox(sf::Vector2f(300, 80));
@@ -173,7 +182,7 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
-    int i = 0, failsafe = 0;
+    int i = 0, failsafe = 0, win_condition = 0;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -224,6 +233,7 @@ int main()
             else if (aboutMode) {
                 exitBtn.draw(window);
                 newPlayGameBtn.draw(window);
+                window.draw(aboutText);
                 if (newPlayGameBtn.isBeingPushed(window)) {
                     resetBackgroundScale(window, gameBackgroundTexture, background);
                     aboutMode = false;
@@ -236,7 +246,8 @@ int main()
 
             // Run the game
             else {
-                
+                if (i ==  6) { resetBackgroundScale(window, sceneOneTexture, background); }
+               
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
                 if (i >= 8)
@@ -245,11 +256,10 @@ int main()
                 }
                 window.draw(rec_shape);
                 window.draw(text);
-                
-                if (i == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
+               
 
 
-                if (continue_button.isBeingPushed(window) && i < 29)
+                if (i < 29 && continue_button.isBeingPushed(window)  )
                 {
                     ++i;
                     text.setString(readFromFile(file));
@@ -266,20 +276,27 @@ int main()
                     button4.draw(window);
 
                     girl.set_the_Position(sf::Vector2f(800, -100));
-                    if (button1.isBeingPushed(window))
-                    {
-                        text.setString("Good job! If you failed this one I would be concerned...");
-                        ++i;
-                        ++failsafe;
-                        
-                    }
 
-                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
                     {
-                        std::cout << "Wrong Answer!" << std::endl;
-                        text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
-                        ++failsafe;
-                        ++i;
+                        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+
+                        if (button1.isBeingPushed(window))
+                        {
+                            text.setString("Good job! If you failed this one I would be concerned...");
+                            ++i;
+                            ++failsafe;
+                            girl.set_interest(win_condition++);
+                        }
+
+                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                        {
+                            std::cout << "Wrong Answer!" << std::endl;
+                            text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
+                            ++failsafe;
+                            ++i;
+                        }
+                      
                     }
                 }
                 if (i == 30 && continue_button.isBeingPushed(window)) { i++; }
@@ -288,7 +305,7 @@ int main()
                 {
                     text.setString("If you can't answer this one, you're an idiot!");
                     inputText.setString("What is a private member of a class?");
-                    button1.setButtonText("A variable or function that cannot be accessed from the outside of a class");
+                    button1.setButtonText("A variable or function that cannot be accessed \nfrom the outside of a class");
                     button2.setButtonText("Idk");
                     button3.setButtonText("A member that can only be accessed using a friend function");
                     button4.setButtonText("A member of a class that is protected");
@@ -299,30 +316,119 @@ int main()
                     button3.draw(window);
                     button4.draw(window);
 
-                    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+                    if (button1.isBeingPushed(window))
                     {
-                        sf::Vector2i mousePos = sf::Mouse::getPosition(window);
-
-                        if (button1.isBeingPushed(window))
-                        {
-                            text.setString("Nice! People who are smart are hot ;)");
-                            ++i;
-                            ++failsafe;
-
-                        }
-
-                        if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
-                        {
-                            std::cout << "Wrong Answer!" << std::endl;
-                            text.setString("Wrong! You're getting uglier the more you get things wrong...");
-                            ++i;
-                            ++failsafe;
+                        text.setString("Nice! People who are smart are hot ;)");
+                        ++i;
+                        ++failsafe;
+                        win_condition++;
+                        girl.set_interest(win_condition++);
                     
-                        }
-
                     }
+                    
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Wrong! You're getting uglier the more you get things wrong...");
+                        ++i;
+                        ++failsafe;
+                    }
+
+                    
                 }
 
+                if (i == 32 && continue_button.isBeingPushed(window)) { i++; }
+
+                if (i == 33 && failsafe == 2)
+                {
+                    text.setString("Let's make things a little more challenging!");
+                    inputText.setString("Give the big O notation \nfor bubble sort!");
+                    button1.setButtonText("O(n^2)");
+                    button2.setButtonText("O(n)");
+                    button3.setButtonText("O(logn)");
+                    button4.setButtonText("O(logn * n");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Your good at this hehe");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
+                    {
+                        std::cout << "Wrong Answer!" << std::endl;
+                        text.setString("Basic knowledge, do you actually know how to code?");
+                        ++i;
+                        ++failsafe;
+                    }
+
+                }
+                if (i == 34 && continue_button.isBeingPushed(window)) { i++; }
+
+                if (i == 35 && failsafe == 3)
+                {
+                    text.setString("One more and we're done!");
+                    inputText.setString("What's your favorite coding language?");
+                    button1.setButtonText("Python");
+                    button2.setButtonText("C");
+                    button3.setButtonText("C++");
+                    button4.setButtonText("Java");
+                    window.draw(inputBox);
+                    window.draw(inputText);
+                    button1.draw(window);
+                    button2.draw(window);
+                    button3.draw(window);
+                    button4.draw(window);
+
+
+                    if (button1.isBeingPushed(window))
+                    {
+                        text.setString("Ew, too basic for my tastes...");
+                        ++i;
+                        ++failsafe;
+                    }
+
+                    if (button2.isBeingPushed(window) || button3.isBeingPushed(window))
+                    {
+
+                        text.setString("No way! I love anything related to C!");
+                        ++i;
+                        ++failsafe;
+                        girl.set_interest(win_condition++);
+
+                    }
+
+                    if (button4.isBeingPushed(window))
+                    {
+                        text.setString("You like java??? Ewwwww......");
+                        ++i;
+                        ++failsafe;
+                    }
+                    
+
+                }
+                
+                if (i >= 36 && i < 45 && (girl.get_interest() >= 3) && continue_button.isBeingPushed(window))
+                {
+                    ++i;
+                    text.setString(readFromFile(file));
+                }
+
+                if (i == 36 && (girl.get_interest() < 3) && continue_button.isBeingPushed(window))
+                {
+                    text.setString("As I thought, you're an idiot!. Have a nice life!");
+                    resetBackgroundScale(window, cafeLoseBackground, background);
+
+                }
                 
 
             }

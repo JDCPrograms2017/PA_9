@@ -22,7 +22,14 @@ public:
 	sf::Sprite& getDrawableObject() {
 		return dynamic_cast<sf::Sprite&>(*this);
 	}
-
+	
+	void set_interest(int x)
+	{
+		interestLevel = x;
+	}
+	int get_interest() {
+		return interestLevel;
+	}
 private:
 	int interestLevel;
 	int numQuestionsCorrect;

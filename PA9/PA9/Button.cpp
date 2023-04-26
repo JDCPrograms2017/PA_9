@@ -33,7 +33,7 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 		rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
 
 		window.draw(rect);
-		window.draw(rectButton);
+		
 		//std::cout << "test";
 	}
 	
@@ -42,6 +42,8 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 bool Button::getButtonState() {
 	return this->toggle;
 }
+
+
 
 bool Button::isBeingPushed(const sf::Window &windowRef) {
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(windowRef); // Gets the position of the mouse relative to the window, not the whole screen.
@@ -54,6 +56,7 @@ bool Button::isBeingPushed(const sf::Window &windowRef) {
 	else {
 		//std::cout << mousePosition.x << ", " << mousePosition.y << " button position: " << this->position.x << ", " << this->position.y << " button size: " << this->getSize().x << ", " << this->getSize().y << std::endl;
 	}
+
 
 	return false;
 }
