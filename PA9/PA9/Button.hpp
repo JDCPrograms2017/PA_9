@@ -40,6 +40,7 @@ public:
 	void setButtonText(std::string newText) {
 		buttonText.setString(newText);
 	}
+	// setters for the button text written by Simon
 	void setButtonTextFont(sf::Font& fontRef) {
 		buttonText.setFont(fontRef);
 	}

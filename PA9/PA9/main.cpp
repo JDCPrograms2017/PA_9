@@ -37,7 +37,7 @@ int main()
 
 
     int gameWon = 0;
-    // music
+    // music, done by Simon
     sf::Music music;
     music.openFromFile("music/dating_theme.ogg");
 
@@ -47,11 +47,11 @@ int main()
     sf::Music scene2_music;
     scene2_music.openFromFile("music/panda.ogg");
 
-    // Text generation
+    // Text generation, done by Simon
     sf::Font font;
     font.loadFromFile("Font/Aller_It.ttf");
  
-    // text generated on screen
+    // text generated on screen, done by Simon
     sf::Text text;
     text.setFont(font);
     text.setCharacterSize(25);
@@ -106,7 +106,7 @@ int main()
     sf::Texture cars;
     cars.loadFromFile("Textures/cars_bedroom.jpeg");
 
-    // This is the texture and mapping for the text box for when she speaks
+    // This is the texture and mapping for the text box for when she speaks, done by Simon
     sf::RectangleShape rec_shape;
     rec_shape.setSize(sf::Vector2f(1400, 569));
     sf::Texture text_Texture;
@@ -115,7 +115,7 @@ int main()
     rec_shape.setPosition(-20, 350);
 
 
-    // andy's dream girl, added polymorphism
+    // Creating assets for Clarissa, done by Simon
     sf::Texture girl_asset;
     girl_asset.loadFromFile("Textures/andy_girl3.png");
     sf::Texture girl2_asset;
@@ -218,7 +218,7 @@ int main()
 
     music.play();
 
-    /* Simon wrote first half of dialogue, Zack wrote latter */
+    /* Simon wrote first scene, Zack wrote latter */
     std::ifstream file("lines.txt");
 
     int i = 0, failsafe = 0, win_condition = 0;
@@ -301,11 +301,11 @@ int main()
                 }
             }
             
-            // Run the game
+            // Run the game, beggining of Simon's code
             else {
                 if (i ==  6) { resetBackgroundScale(window, sceneOneTexture, background); }
            
-                if (i == 7)
+                if (i == 8)
                 {
                     scene1_music.play();
                 }
@@ -318,7 +318,7 @@ int main()
                 window.draw(rec_shape);
                 window.draw(text);
                 exitBtn.draw(window);
-                if (i == 6) {
+                if (i == 6) { 
                     resetBackgroundScale(window, sceneOneTexture, background);
                     if (event.type == sf::Event::Resized) {
                         resetBackgroundScale(window, sceneOneTexture, background);
@@ -502,14 +502,14 @@ int main()
                     ++i;
                     text.setString(readFromFile(file));
                 }
-
+                
                 if (i == 36 && (girl.get_interest() < 3) && continue_button.isBeingPushed(window))
                 {
                     text.setString("As I thought, you're an idiot!. Have a nice life!");
                     // Haley designed and implemented the cafe losing screen
                     resetBackgroundScale(window, cafeLoseBackground, background);
                 }
-                
+                // end of Simon's code as it is the end of scene
                 /* Zack: Panda Level, I worked on this originally on my branch and looked little different, Simon and I differed on how our games progressed */
                 /* Cause mine progressed in a way that conflicted with Simons, I decided to code and abrige my Panda level                                  */
                
