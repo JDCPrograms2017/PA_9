@@ -80,7 +80,7 @@ int main()
     aboutBackgroundTexture.loadFromFile("Textures/aboutScreen.png");
     empty_texture.loadFromFile("Textures/empty.png");
     sceneOneTexture.loadFromFile("Textures/cafe.jpg");
-    resetBackgroundScale(window, menuBackgroundTexture, background); 
+    resetBackgroundScale(window, menuBackgroundTexture, background);
 
 
 
@@ -180,7 +180,8 @@ int main()
 
     music.play();
     std::ifstream file("lines.txt");
-    int i = 0, failsafe = 0;
+    int  failsafe = 0;
+    int zackTicker = 0;
     while (window.isOpen()) //NOTE: Rapid flickering after texture resizing or reloading is because the resizing event remains until a new event occurs. Fix this.
     {
 
@@ -244,27 +245,28 @@ int main()
 
             // Run the game
             else {
-                
+
                 //window.draw(girl.getDrawableObject());
                 /*    continue_button.draw(window);*/
-                if (i >= 8)
+                std::cout << ticker;
+                if (ticker == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
+
+                if (32 > ticker >= 8)
                 {
                     window.draw(girl.getDrawableObject());
                 }
                 window.draw(rec_shape);
                 window.draw(text);
-                
-                if (i == 6) { resetBackgroundScale(window, sceneOneTexture, background); }
 
 
-                if (continue_button.isBeingPushed(window) && i < 29)
+                if (continue_button.isBeingPushed(window) && ticker < 29)
                 {
-                    ++i;
+                    ++ticker;
                     text.setString(readFromFile(file));
 
                 }
 
-                if (i == 29 && failsafe == 0)
+                if (ticker == 29 && failsafe == 0)
                 {
                     window.draw(inputBox);
                     window.draw(inputText);
@@ -277,9 +279,9 @@ int main()
                     if (button1.isBeingPushed(window))
                     {
                         text.setString("Good job! If you failed this one I would be concerned...");
-                        ++i;
+                        ++ticker;
                         ++failsafe;
-                        
+
                     }
 
                     if (button2.isBeingPushed(window) || button3.isBeingPushed(window) || button4.isBeingPushed(window))
@@ -287,12 +289,12 @@ int main()
                         std::cout << "Wrong Answer!" << std::endl;
                         text.setString("How did you get it wrong??? Maybe you're not as good as I thought...");
                         ++failsafe;
-                        ++i;
+                        ++ticker;
                     }
                 }
-                if (i == 30 && continue_button.isBeingPushed(window)) { i++; }
+                if (ticker == 30 && continue_button.isBeingPushed(window)) { ticker++; }
 
-                if (i == 31 && failsafe == 1)
+                if (ticker == 31 && failsafe == 1)
                 {
                     text.setString("If you can't answer this one, you're an idiot!");
                     inputText.setString("What is a private member of a class?");
@@ -314,7 +316,7 @@ int main()
                         if (button1.isBeingPushed(window))
                         {
                             text.setString("Nice! People who are smart are hot ;)");
-                            ++i;
+                            ++ticker;
                             ++failsafe;
 
                         }
@@ -323,40 +325,48 @@ int main()
                         {
                             std::cout << "Wrong Answer!" << std::endl;
                             text.setString("Wrong! You're getting uglier the more you get things wrong...");
-                            ++i;
+                            ++ticker;
                             ++failsafe;
-                    
+
                         }
 
                     }
+
+
+
                 }
 
-                if (ticker >= 9)
-                {
-                    window.draw(girl.getDrawableObject());
-                    window.draw(rec_shape);
-                    window.draw(text);
-                }
+/* Okay this is zacks bandade solution to online workflow, two diff creators approaches */
+               
 
-                if (continue_button.isBeingPushed(window))
-                {
+                    if (zackTicker >= 32)
+                    {
+                        window.draw(girl.getDrawableObject());
+         
+                    }
 
-                    ++ticker;
-                    std::cout << ticker;
-                    text.setString(readFromFile(file));
-                    window.draw(text);
+               
 
-                    if (ticker == 6)
+                    
+              
+                    if (32 <= zackTicker < 38)
+                    {
+                        text.setString(readFromFile(file));
+                    }
+                    
+                    
+
+                    if (zackTicker == 38)
                     {
                         /* Transition to the stor vroom vroom */
                         resetBackgroundScale(window, gameFancyPanda, background);
                         text.setString(readFromFile(file));
-                        window.draw(text);
+                        
 
 
 
                     }
-                    if (ticker == 9)
+                    if (zackTicker == 42)
                     {
                         /*---- Zoom Effect ------------------------------------------------*/
 
@@ -382,24 +392,24 @@ int main()
                             // Draw scene
                             window.clear();
                             window.draw(background);
-                            window.display();
+
 
 
 
                         }
 
                         // Switch back to original view
-                        window.setView(view);
+                        //window.setView(view);
 
-                        /*------------------------------------------------------------*/
+                        ///*------------------------------------------------------------*/
 
 
-                        /* Transition to the stor vroom vroom */
+                        ///* Transition to the stor vroom vroom */
 
-                        resetBackgroundScale(window, gamePandaInterior, background);
+                        //resetBackgroundScale(window, gamePandaInterior, background);
 
-                        text.setString(readFromFile(file));
-                        window.draw(text);
+                       
+                        
 
                     }
 
@@ -410,11 +420,12 @@ int main()
 
             window.display();
         }
-
-        return 0;
     }
 
+    return 0;
 }
+
+
 
 void resetBackgroundScale(sf::RenderWindow& windowRef, sf::Texture& backgroundTextureRef, sf::Sprite &backgroundRef) {
     sf::Vector2u windowSize = windowRef.getSize(), textureSize = backgroundTextureRef.getSize();

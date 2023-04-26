@@ -33,7 +33,7 @@ void Button::draw(sf::RenderWindow& window, bool debugMode) {
 		rect.setPosition(buttonText.getPosition().x + bounds.left, buttonText.getPosition().y + bounds.top);
 
 		window.draw(rect);
-		window.draw(rectButton);
+		
 		//std::cout << "test";
 	}
 	
